@@ -8,10 +8,14 @@ public class GameManager : MonoBehaviour {
 
     // Player controller script, will assign on start
     private PlayerController player;
+	
+	//Player lives
+	private int lives;
 
 	// Find the player script in game.
 	void Start () {
         player = FindObjectOfType<PlayerController>();
+		lives = 3;
 	}
 	
 	// Update is called once per frame
@@ -20,9 +24,16 @@ public class GameManager : MonoBehaviour {
 	}
 
     // Respawn Player at current checkpoint assigned.
+    // Once out of lives, respawn is at starting checkpoint. Resets lives to 3.
     public void RespawnPlayer()
     {
-        player.transform.position = currentCheckpoint.transform.position;
+		lives -= 1;
+		if (lives >= 0)
+			player.transform.position = currentCheckpoint.transform.position;
+		else {
+			player.transform.position = GameObject.Find("Checkpoint").transform.position;
+			lives = 3;
+		}
         Debug.Log("Respawn Player.");
     }
 }
