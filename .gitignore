@@ -1,0 +1,18 @@
+# ==================== #
+# Unity stuff
+# ==================== #
+2D\ Platformer\ Prototype/Library/
+2D\ Platformer\ Prototype/Temp/
+
+# =================== #
+# OSx specific stuff
+# =================== #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+# vim swap files
+*.swp
