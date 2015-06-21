@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
 			player.transform.position = GameObject.Find("Checkpoint").transform.position;
 			lives = 3;
 		}
+
         Debug.Log("Respawn Player.");
     }
 	public int getScore()

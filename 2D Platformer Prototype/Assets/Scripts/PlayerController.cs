@@ -92,8 +92,10 @@ public class PlayerController : MonoBehaviour {
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
     }
+
 	private void movePlayer(float moveSpeed, int direction)
 	{
 		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * direction, GetComponent<Rigidbody2D>().velocity.y);
 	}
+	
 }
