@@ -299,15 +299,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 458503006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5928953d1940b3b4cae6f84392dad7b8, type: 3}
+  m_Script: {fileID: 11500000, guid: ea233a4cfc30d4f408fccadcecc439ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   moveDistance: 10
   jumpHeight: 0
-  groundCheck: {fileID: 1451399034}
-  whatIsGround: {}
-  groundCheckRadius: .100000001
+  groundCheck: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckRadius: 0
 --- !u!1001 &474056492
 Prefab:
   m_ObjectHideFlags: 0
@@ -353,7 +355,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 506fadb6f2ceabc4a934c0abadff3eed, type: 2}
-  m_RootGameObject: {fileID: 771369772}
   m_IsPrefabParent: 0
 --- !u!1 &479588800
 GameObject:
@@ -460,61 +461,6 @@ Transform:
   m_LocalScale: {x: 20, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 479588801}
-  m_RootOrder: 0
---- !u!1 &771369772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 137548, guid: 506fadb6f2ceabc4a934c0abadff3eed, type: 2}
-  m_PrefabInternal: {fileID: 474056492}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 771369775}
-  - 114: {fileID: 771369774}
-  - 58: {fileID: 771369773}
-  m_Layer: 0
-  m_Name: Checkpoint (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!58 &771369773
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5852864, guid: 506fadb6f2ceabc4a934c0abadff3eed,
-    type: 2}
-  m_PrefabInternal: {fileID: 474056492}
-  m_GameObject: {fileID: 771369772}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.79999995
---- !u!114 &771369774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11439378, guid: 506fadb6f2ceabc4a934c0abadff3eed,
-    type: 2}
-  m_PrefabInternal: {fileID: 474056492}
-  m_GameObject: {fileID: 771369772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5719ad11be64203428de3c3127bef35d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &771369775
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 415000, guid: 506fadb6f2ceabc4a934c0abadff3eed, type: 2}
-  m_PrefabInternal: {fileID: 474056492}
-  m_GameObject: {fileID: 771369772}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 101.300003, y: 7.4000001, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
-  m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!1 &941307451
 GameObject:
@@ -674,8 +620,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -20}
-  m_SizeDelta: {x: 600, y: 30}
+  m_AnchoredPosition: {x: 550, y: -70}
+  m_SizeDelta: {x: 600, y: 90}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1136951587
 MonoBehaviour:
@@ -717,7 +663,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136951585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a96d14cf348a31f41b8553ee914120dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ef14e852f69db842b02145ee7ebc08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1295415526
@@ -1299,15 +1245,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789546046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5928953d1940b3b4cae6f84392dad7b8, type: 3}
+  m_Script: {fileID: 11500000, guid: ea233a4cfc30d4f408fccadcecc439ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   moveDistance: 10
   jumpHeight: 0
-  groundCheck: {fileID: 1451399034}
-  whatIsGround: {}
-  groundCheckRadius: .100000001
+  groundCheck: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckRadius: 0
 --- !u!50 &1789546048
 Rigidbody2D:
   serializedVersion: 2
