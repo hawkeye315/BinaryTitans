@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour {
 		else {
 			player.transform.position = GameObject.Find("Checkpoint").transform.position;
 			lives = 3;
+			score = 0;
 		}
-
         Debug.Log("Respawn Player.");
     }
 	public int getScore()
@@ -58,5 +58,9 @@ public class GameManager : MonoBehaviour {
 			RespawnPlayer ();
 		} else if (health > 100)
 			health = 100;
+	}
+	public int getLives()
+	{
+		return lives;
 	}
 }
