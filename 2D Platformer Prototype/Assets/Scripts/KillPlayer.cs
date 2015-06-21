@@ -3,7 +3,7 @@ using System.Collections;
 
 public class KillPlayer : MonoBehaviour {
 
-    public GameManager gameManager;
+    private GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {

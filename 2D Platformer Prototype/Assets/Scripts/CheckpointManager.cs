@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CheckpointManager : MonoBehaviour {
 
-    public GameManager gameManager;
+	private GameManager gameManager;
 
 	// Assign Game Manager script
 	void Start () {
