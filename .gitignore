@@ -3,7 +3,12 @@
 # ==================== #
 2D\ Platformer\ Prototype/Library/
 2D\ Platformer\ Prototype/Temp/
-
+2D\ Platformer\ Prototype/Obj/
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
 # =================== #
 # OSx specific stuff
 # =================== #
