@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
 			//if at a downward, vertical angle, destroy enemy, else hurt player
-			if (angle < -45) {
+			if (angle < -60) {
 				Destroy (col.gameObject);
 				gameManager.changeScore (100);
 			}
