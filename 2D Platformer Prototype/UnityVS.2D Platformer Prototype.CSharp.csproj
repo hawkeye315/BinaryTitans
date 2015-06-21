@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CheckpointManager.cs" />
+    <Compile Include="Assets\Scripts\EnemyAI.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\KillPlayer.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

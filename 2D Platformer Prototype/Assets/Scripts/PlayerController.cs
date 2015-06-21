@@ -39,19 +39,15 @@ public class PlayerController : MonoBehaviour {
             doubleJumped = false;
 
         // Jump code. If space is pressed and the player is touching the ground then run Jump function.
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump();
+			if (grounded)
+				Jump ();
+			else if (!doubleJumped) {
+				Jump ();
+				doubleJumped = true;
+			}
         }
-
-        // Double jump code: if space is pressed down and doubleJump is false and player is not touching the ground 
-        // then Jump and set doubleJumped bool to true. 
-        if (Input.GetKeyDown(KeyCode.Space) && !doubleJumped && !grounded )
-        {
-            Jump();
-            doubleJumped = true;
-        }
-
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
