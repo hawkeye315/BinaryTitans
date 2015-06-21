@@ -49,13 +49,13 @@ public class PlayerController : MonoBehaviour {
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
-			movePlayer (moveSpeed, -1);
+			movePlayer (moveSpeed, -1, GetComponent<Rigidbody2D>().velocity.y, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
-			movePlayer (moveSpeed, 1);
+			movePlayer (moveSpeed, 1, GetComponent<Rigidbody2D>().velocity.y, 1);
         }
 	}
 
@@ -78,13 +78,13 @@ public class PlayerController : MonoBehaviour {
 				gameManager.changeHealth(-10);
 				//if player is to left of enemy, push left, otherwise right
 				if (transform.position.x <= col.gameObject.transform.position.x)
-					movePlayer (moveSpeed, -1);
+					movePlayer (moveSpeed, -1, moveSpeed, 1);
 				else
-					movePlayer (moveSpeed, 1);
+					movePlayer (moveSpeed, 1, moveSpeed, 1);
 			}
 		}
 	}
-
+	//tComponent<Rigidbody2D>().velocity.y
 
 
     // Jump function.
@@ -93,9 +93,9 @@ public class PlayerController : MonoBehaviour {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
     }
 
-	private void movePlayer(float moveSpeed, int direction)
+	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
-		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * direction, GetComponent<Rigidbody2D>().velocity.y);
+		GetComponent<Rigidbody2D>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 	
 }
