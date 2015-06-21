@@ -12,19 +12,9 @@ public class EnemyAI : MonoBehaviour {
 	// Random jump height
 	public float jumpHeight;
 
-	private float moveVelocity;
 	// Direction (+ = Right), (- = Left)
 	private int moveDirection;
-
-	// Ground check gameobject under Player
-	public Transform groundCheck;
-	// Ground Layer
-	public LayerMask whatIsGround;
-	// Amount of space to check to see if touching the ground
-	public float groundCheckRadius;
-	// Is the player touching the ground?
-	private bool grounded;
-
+	
 	private int health;
 
 	// Use this for initialization
@@ -32,14 +22,7 @@ public class EnemyAI : MonoBehaviour {
 		enemyStartPosition = transform.position;
 		moveDirection = 1;
 	}
-	
-
-	private void FixedUpdate()
-	{
-		grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-	}
-
-	// Update is called once per frame
+		// Update is called once per frame
 	void Update () {
 		if (transform.position.x <= enemyStartPosition.x)
 			moveDirection = 1;
