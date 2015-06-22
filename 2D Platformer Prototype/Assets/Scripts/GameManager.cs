@@ -70,12 +70,8 @@ public class GameManager : MonoBehaviour {
 		} else if (health > 100)
 			health = 100;
 	}
-<<<<<<< HEAD
-}
-=======
 	public int getLives()
 	{
 		return lives;
 	}
 }
->>>>>>> origin/master
