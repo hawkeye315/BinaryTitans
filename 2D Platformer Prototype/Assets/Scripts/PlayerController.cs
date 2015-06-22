@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight;
     private float moveVelocity;
 	private GameManager gameManager;
+    private Animator anim;
 
     // Ground check gameobject under Player
     public Transform groundCheck;
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManager = FindObjectOfType<GameManager>();
+        anim = GetComponent<Animator>();
+        
 	}
 
     // This function checks to see if the Player is touching the ground and
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour {
 				doubleJumped = true;
 			}
         }
+
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
@@ -56,6 +60,16 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(KeyCode.D))
         {
 			movePlayer (moveSpeed, 1);
+        }
+
+        if (anim.GetBool("MeleeAttack"))
+        {
+            anim.SetBool("MeleeAttack", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            anim.SetBool("MeleeAttack", true);
         }
 	}
 
@@ -85,13 +99,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-
-
     // Jump function.
     public void Jump()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
     }
+    
+    // Move function.
 	private void movePlayer(float moveSpeed, int direction)
 	{
 		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * direction, GetComponent<Rigidbody2D>().velocity.y);
