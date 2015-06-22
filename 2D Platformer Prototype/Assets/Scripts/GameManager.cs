@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 		else {
 			player.transform.position = GameObject.Find("Checkpoint").transform.position;
 			lives = 3;
+			score = 0;
 		}
         Debug.Log("Respawn Player.");
     }
@@ -69,4 +70,12 @@ public class GameManager : MonoBehaviour {
 		} else if (health > 100)
 			health = 100;
 	}
+<<<<<<< HEAD
 }
+=======
+	public int getLives()
+	{
+		return lives;
+	}
+}
+>>>>>>> origin/master

@@ -53,13 +53,13 @@ public class PlayerController : MonoBehaviour {
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
-			movePlayer (moveSpeed, -1);
+			movePlayer (moveSpeed, -1, GetComponent<Rigidbody2D>().velocity.y, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
-			movePlayer (moveSpeed, 1);
+			movePlayer (moveSpeed, 1, GetComponent<Rigidbody2D>().velocity.y, 1);
         }
 
         if (anim.GetBool("MeleeAttack"))
@@ -84,30 +84,42 @@ public class PlayerController : MonoBehaviour {
 			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
 			//if at a downward, vertical angle, destroy enemy, else hurt player
-			if (angle < -45) {
+			if (angle <= -60 && angle >= -120) {
 				Destroy (col.gameObject);
+				Debug.Log("Angle of attack was " + angle);
 				gameManager.changeScore (100);
 			}
 			else {
 				gameManager.changeHealth(-10);
 				//if player is to left of enemy, push left, otherwise right
 				if (transform.position.x <= col.gameObject.transform.position.x)
-					movePlayer (moveSpeed, -1);
+					movePlayer (moveSpeed, -1, moveSpeed, 1);
 				else
-					movePlayer (moveSpeed, 1);
+					movePlayer (moveSpeed, 1, moveSpeed, 1);
 			}
 		}
 	}
+<<<<<<< HEAD
+=======
+	//tComponent<Rigidbody2D>().velocity.y
+
+>>>>>>> origin/master
 
     // Jump function.
     public void Jump()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
     }
+<<<<<<< HEAD
     
     // Move function.
 	private void movePlayer(float moveSpeed, int direction)
+=======
+
+	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
+>>>>>>> origin/master
 	{
-		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * direction, GetComponent<Rigidbody2D>().velocity.y);
+		GetComponent<Rigidbody2D>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
+	
 }
