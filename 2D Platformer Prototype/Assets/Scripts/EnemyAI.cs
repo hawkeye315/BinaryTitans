@@ -8,6 +8,8 @@ public class EnemyAI : MonoBehaviour {
 	public float moveDistance;
 
 	private Vector3 enemyStartPosition;
+	private double lastInterval; // Last interval end time
+	private double nextInterval;
 
 	// Random jump height
 	public float jumpHeight;
@@ -19,16 +21,30 @@ public class EnemyAI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		lastInterval = Time.time;
+		nextInterval = Time.time + (Random.value * 5 + 3);
 		enemyStartPosition = transform.position;
 		moveDirection = 1;
 	}
 
 	// Update is called once per frame
+<<<<<<< HEAD
+=======
+		// Update is called once per frame
+>>>>>>> 6a34c751724e856cee7d1d8cf35229e4c6c47c88
 	void Update () {
+		if (Time.time >= nextInterval) {
+			Jump ();
+			nextInterval = Time.time + (Random.value * 5 + 3);
+		}
 		if (transform.position.x <= enemyStartPosition.x)
 			moveDirection = 1;
 		else if (transform.position.x >= enemyStartPosition.x + moveDistance)
 			moveDirection = -1;
 		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * moveDirection, GetComponent<Rigidbody2D>().velocity.y);
+	}
+	public void Jump()
+	{
+		GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);  
 	}
 }

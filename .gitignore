@@ -4,6 +4,8 @@
 2D\ Platformer\ Prototype/Library/
 2D\ Platformer\ Prototype/Temp/
 2D\ Platformer\ Prototype/Obj/
+2D\ Platformer\ Prototype/obj/
+*.suo
 *.csproj
 *.unityproj
 *.sln

@@ -74,4 +74,8 @@ public class GameManager : MonoBehaviour {
 	{
 		return lives;
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6a34c751724e856cee7d1d8cf35229e4c6c47c88

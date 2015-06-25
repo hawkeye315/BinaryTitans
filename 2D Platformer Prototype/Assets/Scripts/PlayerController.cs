@@ -36,14 +36,13 @@ public class PlayerController : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        // If the player is touching the ground then set the doubleJumped variable to false.
-		if (grounded)
-            doubleJumped = false;
         // Jump code. If space is pressed and the player is touching the ground then run Jump function.
         if (Input.GetKeyDown(KeyCode.Space))
         {
-			if (grounded)
+			if (grounded) {
+				doubleJumped = false;
 				Jump ();
+			}
 			else if (!doubleJumped) {
 				Jump ();
 				doubleJumped = true;
@@ -99,19 +98,25 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 6a34c751724e856cee7d1d8cf35229e4c6c47c88
     // Jump function.
     public void Jump()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
+<<<<<<< HEAD
     }
     
     // Move function.
 
+=======
+    }    
+>>>>>>> 6a34c751724e856cee7d1d8cf35229e4c6c47c88
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
 		GetComponent<Rigidbody2D>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
-	
 }
