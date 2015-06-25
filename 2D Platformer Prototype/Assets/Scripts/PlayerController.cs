@@ -99,25 +99,17 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-<<<<<<< HEAD
-=======
-	//tComponent<Rigidbody2D>().velocity.y
 
->>>>>>> origin/master
 
     // Jump function.
     public void Jump()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
     }
-<<<<<<< HEAD
     
     // Move function.
-	private void movePlayer(float moveSpeed, int direction)
-=======
 
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
->>>>>>> origin/master
 	{
 		GetComponent<Rigidbody2D>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
