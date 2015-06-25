@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 	public float jumpHeight;
 	// Private variables
 	private float moveVelocity;
-	private State currentState;
+	public State currentState;
 	// Ground check gameobject under Player
 	public Transform groundCheck;
 	// Ground Layer
@@ -21,9 +21,10 @@ public class Player : MonoBehaviour {
 	// Amount of space to check to see if touching the ground
 	public float groundCheckRadius;
 	// Is the player touching the ground?
-	private bool grounded;
+	public bool grounded;
 	// Is the player moving?
-	private bool moving;
+	public bool moving;
+	private bool justJumped = false;
 
 	private Animator anim;
 
@@ -40,11 +41,16 @@ public class Player : MonoBehaviour {
 	void Start () {
 		health = 100;
 		lives = 3;
+		anim = GetComponent<Animator>();
 		//set up keys
+		controlKeys = new Dictionary<string, KeyCode>();
 		controlKeys.Add("moveLeft", KeyCode.A);
 		controlKeys.Add("moveRight", KeyCode.D);
 		controlKeys.Add("jump", KeyCode.Space);
 		controlKeys.Add("attack", KeyCode.P);
+
+		//start it up in idle
+		currentState = State.Idle;
 	}
 	
 	// Update is called once per frame
@@ -64,19 +70,72 @@ public class Player : MonoBehaviour {
 				if(Input.GetKeyDown(controlKeys["jump"])){
 					Jump();
 					currentState = State.Jumping;
+					justJumped = true;
 				}
 				break;
 			case State.Jumping:
 				//From here we can go to double jumping, idle, moving
-				//if(grounded)
+				if(grounded && !justJumped){
+                    if(moving){
+                        currentState = State.Moving;
+                    } else {
+                        currentState = State.Idle;
+                	}
+				}
+				if(Input.GetKey(controlKeys["moveLeft"])){
+					MovePlayerLeft();
+				}
+				if(Input.GetKey(controlKeys["moveRight"])){
+					MovePlayerRight();
+				}
+                if(Input.GetKeyDown(controlKeys["jump"])){
+                    Jump();
+                    currentState = State.DoubleJumping;
+                }
+				justJumped = false;
 				break;
 			case State.DoubleJumping:
 				//From here we can go to idle, moving
+				if(grounded){
+                    if(moving){
+                        currentState = State.Moving;
+                    } else {
+                        currentState = State.Idle;
+                	}
+				}
+				if(Input.GetKey(controlKeys["moveLeft"])){
+					MovePlayerLeft();
+				}
+				if(Input.GetKey(controlKeys["moveRight"])){
+					MovePlayerRight();
+				}
 				break;
 			case State.Moving:
 				//From here we can go to idle or jumping
+                if(!moving){
+                    currentState = State.Idle;
+                }
+
+				if(Input.GetKey(controlKeys["moveLeft"])){
+					MovePlayerLeft();
+				}
+				if(Input.GetKey(controlKeys["moveRight"])){
+					MovePlayerRight();
+				}
+				if(Input.GetKeyDown(controlKeys["jump"])){
+					Jump();
+					currentState = State.Jumping;
+				}
+                 
 				break;
 		}
+        // Regardles off the current state we should be able to attack
+        if (anim.GetBool("MeleeAttack")) {
+            anim.SetBool("MeleeAttack", false);
+        }
+        if (Input.GetKeyDown(KeyCode.P)){
+            anim.SetBool("MeleeAttack", true);
+        }
 	}
 
 	// This function checks to see if the Player is touching the ground and
