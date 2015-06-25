@@ -178,16 +178,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 33278071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec7cb159d4077cc428c563b6d76ae2a1, type: 3}
+  m_Script: {fileID: 11500000, guid: e1b3b0007bbcb462c9d7147420195d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+  lives: 0
   moveSpeed: 10
   jumpHeight: 22
+  currentState: 0
   groundCheck: {fileID: 1451399034}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
   groundCheckRadius: .100000001
+  grounded: 0
+  moving: 0
 --- !u!61 &33278077
 BoxCollider2D:
   m_ObjectHideFlags: 0
