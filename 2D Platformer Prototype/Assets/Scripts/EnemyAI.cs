@@ -28,10 +28,6 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-<<<<<<< HEAD
-=======
-		// Update is called once per frame
->>>>>>> 6a34c751724e856cee7d1d8cf35229e4c6c47c88
 	void Update () {
 		if (Time.time >= nextInterval) {
 			Jump ();
