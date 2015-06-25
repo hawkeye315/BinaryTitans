@@ -40,6 +40,19 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		switch(currentState){
+			case State.Idle:
+				//From here we can go to moving, or jumping 
+				break;
+			case State.Jumping:
+				//From here we can go to double jumping, idle, moving
+				break;
+			case State.DoubleJumping:
+				//From here we can go to idle, moving
+				break;
+			case State.Moving:
+				//From here we can go to idle or jumping
+				break;
+		}
 	}
 }
