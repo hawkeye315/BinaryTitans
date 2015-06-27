@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
         player = FindObjectOfType<PlayerController>();
 		lives = 3;
 		cameraVector =GameObject.FindGameObjectWithTag("MainCamera").transform.position;
+		cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
+		cameraPosition [1] = player.transform.position.y;
 	}
 	
 	// Update is called once per frame
@@ -33,8 +35,9 @@ public class GameManager : MonoBehaviour {
 			cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
 		if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) > 5)
 			cameraPosition [1] = player.transform.position.y - 5;
-		else if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) < 0)
+		else if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) < 0 && player.transform.position.y > -3)
 			cameraPosition [1] = player.transform.position.y;
+
 		SetCameraPosition (cameraPosition);
 			
 	}
