@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 			cameraPosition [1] = player.transform.position.y - 5;
 		else if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) < 0 && player.transform.position.y > -3)
 			cameraPosition [1] = player.transform.position.y;
-
+		cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
 			
 	}
