@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 	private int health = 100;
 	private int score = 0;
 	private Vector3 cameraVector;
-	private float[] cameraPosition = new float[3]{-5f, 1f, -5.325f};
+	private float[] cameraPosition = new float[3];
 	public float forwardCameraBuffer, rearCameraBuffer;
 
 	// Find the player script in game.
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
 		cameraVector =GameObject.FindGameObjectWithTag("MainCamera").transform.position;
 		cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
 		cameraPosition [1] = player.transform.position.y;
+		cameraPosition [2] = GameObject.FindGameObjectWithTag ("MainCamera").transform.position.z;
 	}
 	
 	// Update is called once per frame

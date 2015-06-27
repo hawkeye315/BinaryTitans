@@ -53,13 +53,13 @@ public class PlayerController : MonoBehaviour {
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
-			movePlayer (moveSpeed, -1, GetComponent<Rigidbody>().velocity.y, 1);
+			movePlayer (moveSpeed, -1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
-			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y, 1);
+			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
         }
 
         if (anim.GetBool("MeleeAttack"))
@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour {
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
+		if (col.gameObject.tag == "Ground") {
+			movePlayer(GetComponent<Rigidbody>().velocity.x, 1, GetComponent<Rigidbody>().velocity.y + .2f, 1); 
+			Debug.Log("Touching Ground");
+		}
 		if (col.gameObject.tag == "Enemy") {
 
 			//Determines the angle of the collision

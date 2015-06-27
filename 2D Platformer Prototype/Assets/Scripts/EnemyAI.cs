@@ -30,6 +30,7 @@ public class EnemyAI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Time.time >= nextInterval) {
+			Debug.Log ("Attempting jump");
 			Jump ();
 			nextInterval = Time.time + (Random.value * 5 + 3);
 		}
@@ -37,10 +38,11 @@ public class EnemyAI : MonoBehaviour {
 			moveDirection = 1;
 		else if (transform.position.x >= enemyStartPosition.x + moveDistance)
 			moveDirection = -1;
-		GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed * moveDirection, GetComponent<Rigidbody2D>().velocity.y);
+		GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y + .3F, GetComponent<Rigidbody>().velocity.z);
 	}
 	public void Jump()
 	{
-		GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);  
+		Debug.Log ("Attempting jump");
+		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
 	}
 }
