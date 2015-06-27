@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour {
     // sets the ground variable to true if he is.
     private void FixedUpdate()
     {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+//        grounded = Physics.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+		grounded = true; //temp until I fix above
     }
 	// Update is called once per frame
 	void Update () {
@@ -52,13 +53,13 @@ public class PlayerController : MonoBehaviour {
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
-			movePlayer (moveSpeed, -1, GetComponent<Rigidbody2D>().velocity.y, 1);
+			movePlayer (moveSpeed, -1, GetComponent<Rigidbody>().velocity.y, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
-			movePlayer (moveSpeed, 1, GetComponent<Rigidbody2D>().velocity.y, 1);
+			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y, 1);
         }
 
         if (anim.GetBool("MeleeAttack"))
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//On maintained collision with another object
-	void OnCollisionStay2D(Collision2D col)
+	void OnCollisionStay(Collision col)
 	{
 		if (col.gameObject.tag == "Enemy") {
 
@@ -97,17 +98,18 @@ public class PlayerController : MonoBehaviour {
 					movePlayer (moveSpeed, 1, moveSpeed, 1);
 			}
 		}
+		Debug.Log("Contact with " + col.gameObject.name);
 	}
 
     // Jump function.
     public void Jump()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);  
+        GetComponent<Rigidbody>().velocity = new Vector2(0, jumpHeight);  
     }
     
     // Move function.
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
-		GetComponent<Rigidbody2D>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
+		GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 }
