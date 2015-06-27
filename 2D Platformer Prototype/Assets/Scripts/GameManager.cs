@@ -14,16 +14,29 @@ public class GameManager : MonoBehaviour {
 	private int lives = 3;
 	private int health = 100;
 	private int score = 0;
+	private Vector3 cameraVector;
+	private float[] cameraPosition = new float[3]{-5f, 1f, -5.325f};
+	public float forwardCameraBuffer, rearCameraBuffer;
 
 	// Find the player script in game.
 	void Start () {
         player = FindObjectOfType<PlayerController>();
 		lives = 3;
+		cameraVector =GameObject.FindGameObjectWithTag("MainCamera").transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if ((player.transform.position.x - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.x) > forwardCameraBuffer)
+			cameraPosition [0] = player.transform.position.x - forwardCameraBuffer;
+		else if ((player.transform.position.x - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.x) < -rearCameraBuffer)
+			cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
+		if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) > 5)
+			cameraPosition [1] = player.transform.position.y - 5;
+		else if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) < 0)
+			cameraPosition [1] = player.transform.position.y;
+		SetCameraPosition (cameraPosition);
+			
 	}
 
     public void RespawnPlayer()
@@ -73,5 +86,9 @@ public class GameManager : MonoBehaviour {
 	public int getLives()
 	{
 		return lives;
+	}
+	public void SetCameraPosition(float[] array)
+	{
+		GameObject.FindGameObjectWithTag ("MainCamera").transform.position = new Vector3 (array[0], array[1], array[2]);
 	}
 }
