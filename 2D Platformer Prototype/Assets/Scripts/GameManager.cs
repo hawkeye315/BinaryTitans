@@ -3,12 +3,11 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 
-    // Current Checkpoint 
-    public GameObject currentCheckpoint;
-
     // Player controller script, will assign on start
     private PlayerController player;
     public float respawnDelay;
+	private float[] checkpoint = {0,3,20,3};
+	private int currentCheckpoint = 0;
 
 	//Player lives
 	private int lives = 3;
@@ -21,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	// Find the player script in game.
 	void Start () {
         player = FindObjectOfType<PlayerController>();
+		player.transform.position = new Vector3(2, 3, 0);
 		lives = 3;
 		cameraVector =GameObject.FindGameObjectWithTag("MainCamera").transform.position;
 		cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
@@ -40,12 +40,16 @@ public class GameManager : MonoBehaviour {
 			cameraPosition [1] = player.transform.position.y;
 		cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
-			
+		if (player.transform.position.x <= -10)
+			RespawnPlayer ();
 	}
 
     public void RespawnPlayer()
     {
-        StartCoroutine("RespawnPlayerCo");
+		cameraPosition [0] = checkpoint[2*currentCheckpoint];
+		cameraPosition [1] = checkpoint[2*currentCheckpoint+1];
+		SetCameraPosition (cameraPosition);
+		StartCoroutine("RespawnPlayerCo");
     }
 
     // Respawn Player at current checkpoint assigned.
@@ -56,13 +60,13 @@ public class GameManager : MonoBehaviour {
 		lives -= 1;
         yield return new WaitForSeconds(respawnDelay);
 		if (lives >= 0)
-			player.transform.position = currentCheckpoint.transform.position;
+			player.transform.position = new Vector3(checkpoint[2*currentCheckpoint], checkpoint[2*currentCheckpoint+1], 0);
 		else {
-			player.transform.position = GameObject.Find("Checkpoint").transform.position;
+			player.transform.position = new Vector3(0, 1, 0);
 			lives = 3;
 			score = 0;
 		}
-        Debug.Log("Respawn Player.");
+		Debug.Log("Respawn Player.");
     }
 
 	public int getScore()
