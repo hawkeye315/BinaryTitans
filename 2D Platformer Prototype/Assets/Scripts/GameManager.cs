@@ -38,10 +38,12 @@ public class GameManager : MonoBehaviour {
 			cameraPosition [1] = player.transform.position.y - 5;
 		else if ((player.transform.position.y - GameObject.FindGameObjectWithTag ("MainCamera").transform.position.y) < 0 && player.transform.position.y > -3)
 			cameraPosition [1] = player.transform.position.y;
+		if (player.transform.position.y <= -10) {
+			RespawnPlayer ();
+		}
+		Debug.Log("Player y= " + player.transform.position.y);
 		cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
-		if (player.transform.position.x <= -10)
-			RespawnPlayer ();
 	}
 
     public void RespawnPlayer()
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour {
 		if (lives >= 0)
 			player.transform.position = new Vector3(checkpoint[2*currentCheckpoint], checkpoint[2*currentCheckpoint+1], 0);
 		else {
-			player.transform.position = new Vector3(0, 1, 0);
+			player.transform.position = new Vector3(0, 3, 0);
 			lives = 3;
 			score = 0;
 		}

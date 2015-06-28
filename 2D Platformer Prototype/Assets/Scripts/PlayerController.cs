@@ -76,10 +76,6 @@ public class PlayerController : MonoBehaviour {
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
-		if (col.gameObject.tag == "Ground") {
-			movePlayer(GetComponent<Rigidbody>().velocity.x, 1, GetComponent<Rigidbody>().velocity.y + .2f, 1); 
-			Debug.Log("Touching Ground");
-		}
 		if (col.gameObject.tag == "Enemy") {
 
 			//Determines the angle of the collision
@@ -102,7 +98,6 @@ public class PlayerController : MonoBehaviour {
 					movePlayer (moveSpeed, 1, moveSpeed, 1);
 			}
 		}
-		Debug.Log("Contact with " + col.gameObject.name);
 	}
 
     // Jump function.
