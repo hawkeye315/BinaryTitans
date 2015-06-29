@@ -127,7 +127,7 @@ public class Player : MonoBehaviour {
 		} else if (health > 100)
 			health = 100;
 	}
-
+	// Getters
 	public int getLives()
 	{
 		return lives;
