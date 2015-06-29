@@ -76,17 +76,16 @@ public class PlayerController : MonoBehaviour {
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
+		Vector3 dir = col.gameObject.transform.position - transform.position;
+		dir = col.gameObject.transform.InverseTransformDirection(dir);
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		Debug.Log("Angle of col was " + angle);
+		
 		if (col.gameObject.tag == "Enemy") {
-
 			//Determines the angle of the collision
-			Vector3 dir = col.gameObject.transform.position - transform.position;
-			dir = col.gameObject.transform.InverseTransformDirection(dir);
-			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
 			//if at a downward, vertical angle, destroy enemy, else hurt player
 			if (angle <= -60 && angle >= -120) {
 				Destroy (col.gameObject);
-				Debug.Log("Angle of attack was " + angle);
 				gameManager.changeScore (100);
 			}
 			else {

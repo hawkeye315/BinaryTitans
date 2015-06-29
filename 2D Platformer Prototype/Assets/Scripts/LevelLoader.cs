@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class LevelLoader : MonoBehaviour {
-	private int[] floor = {0,0,0,0,0,0,1,1,1,1,2,2,2,2,-1,-1,0,0,0};
+	private float[] floor = {0,0,0,0,0,0,1,1,1,1,2,2,2,2,-1,-1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,-1,-1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,-1,-1,0,0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,-1,-1,0,0,0};
 	
 	void Start() {
 		for (int x = 0; x < floor.Length; x++) {

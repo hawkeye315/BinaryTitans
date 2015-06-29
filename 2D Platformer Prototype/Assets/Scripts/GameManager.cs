@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour {
 		if (player.transform.position.y <= -10) {
 			RespawnPlayer ();
 		}
-		Debug.Log("Player y= " + player.transform.position.y);
 		cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
 	}
