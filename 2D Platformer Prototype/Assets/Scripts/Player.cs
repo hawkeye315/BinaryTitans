@@ -15,6 +15,11 @@ public class Player : MonoBehaviour {
 	public int health = 100;
 	public int score = 0;
 
+	//time since last damage
+	private float timeSinceDamage = 0;
+	private float invunerableDamageTime = 0.5f;
+	public bool takenDamage = true;
+
     // Ground check gameobject under Player
     public Transform groundCheck;
     // Ground Layer
@@ -22,7 +27,7 @@ public class Player : MonoBehaviour {
     // Amount of space to check to see if touching the ground
     public float groundCheckRadius;
     // Is the player touching the ground?
-    private bool grounded;
+	public bool grounded;
     // Is the player allowed to doublejump?
     private bool doubleJumped;
 
@@ -37,13 +42,44 @@ public class Player : MonoBehaviour {
 
     // This function checks to see if the Player is touching the ground and
     // sets the ground variable to true if he is.
-    private void FixedUpdate()
-    {
-//        grounded = Physics.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-		grounded = true; //temp until I fix above
-    }
+    //private void FixedUpdate()
+    //{
+	//	//grounded = Physics.OverlapSphere(groundCheck.position, groundCheckRadius, whatIsGround);
+	//}
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
+		grounded = false; //temp until I fix above
+		float distance = 2.2f;
+		RaycastHit hit;
+		Ray groundRay = new Ray(transform.position, Vector3.down);
+		Debug.DrawRay(transform.position, Vector3.down * distance);
+		if(Physics.Raycast(groundRay, out hit, distance)){
+			if(hit.collider.tag == "Ground"){
+				grounded = true;
+			}
+		}
+		//check if we need to reset some variables from animator
+		if (anim.GetBool("MeleeAttack"))
+        {
+            anim.SetBool("MeleeAttack", false);
+        }
+		if (anim.GetBool("TakenDamage") && timeSinceDamage > invunerableDamageTime / 2){
+
+			anim.SetBool("TakenDamage", false);
+		}
+		//Check if the timer for taken damage needs to be updated
+		if(takenDamage){
+			timeSinceDamage += Time.deltaTime;
+			if(timeSinceDamage > invunerableDamageTime){
+				timeSinceDamage = 0;
+				takenDamage = false;
+			}
+		}
+		//if the player was just hurt, or it's health is < 0 we dont want the player to be able to move so 
+		//we just return
+		if(takenDamage || health <= 0){
+			return;
+		}
         // Jump code. If space is pressed and the player is touching the ground then run Jump function.
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -69,11 +105,7 @@ public class Player : MonoBehaviour {
 			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
         }
 
-        if (anim.GetBool("MeleeAttack"))
-        {
-            anim.SetBool("MeleeAttack", false);
-        }
-
+       
         if (Input.GetKeyDown(KeyCode.P))
         {
             anim.SetBool("MeleeAttack", true);
@@ -97,12 +129,13 @@ public class Player : MonoBehaviour {
 				gameManager.changeScore (100);
 			}
 			else {
-				changeHealth(-10);
 				//if player is to left of enemy, push left, otherwise right
 				if (transform.position.x <= col.gameObject.transform.position.x)
 					movePlayer (moveSpeed, -1, moveSpeed, 1);
 				else
 					movePlayer (moveSpeed, 1, moveSpeed, 1);
+				changeHealth(-10);
+
 			}
 		}
 	}
@@ -120,10 +153,17 @@ public class Player : MonoBehaviour {
 	}
 
 	public void changeHealth(int change){
+		//If the player has taken damage recently we dont want him to take it again
+		if(takenDamage){
+			return;
+		}
+		anim.SetBool("TakenDamage",true);
 		health += change;
+		takenDamage = true;
+
 		if (health <= 0) {
-			health = 100;
 			gameManager.RespawnPlayer();
+			takenDamage = true;
 		} else if (health > 100)
 			health = 100;
 	}
