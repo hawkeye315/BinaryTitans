@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour {
 	public Transform player;
 
 	private Vector3 cameraVector;
-	private float[] cameraPosition = new float[3];
+	public float[] cameraPosition = new float[3];
 	public float forwardCameraBuffer, rearCameraBuffer;
 
 	// Use this for initialization
