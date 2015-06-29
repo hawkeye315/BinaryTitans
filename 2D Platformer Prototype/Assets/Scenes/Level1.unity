@@ -239,6 +239,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   groundCheckRadius: .100000001
+  grounded: 0
 --- !u!54 &33278077
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -608,8 +609,8 @@ GameObject:
   - 4: {fileID: 303044024}
   - 33: {fileID: 303044023}
   - 23: {fileID: 303044021}
-  - 61: {fileID: 303044025}
   - 114: {fileID: 303044022}
+  - 65: {fileID: 303044025}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -671,19 +672,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 33278075}
   m_RootOrder: 1
---- !u!61 &303044025
-BoxCollider2D:
+--- !u!65 &303044025
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 303044020}
-  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &352111498 stripped
 Transform:
   m_PrefabParentObject: {fileID: 476936, guid: 376a33597184fc945bf4e56cc72263f3, type: 2}
@@ -2582,7 +2582,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2024790665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.00999999, y: 3.02999997, z: .129999995}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

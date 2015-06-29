@@ -19,20 +19,28 @@ public class EnemyAI : MonoBehaviour {
 	private bool grounded;
 	private int health;
 
+	private Animator anim;
+
 	// Use this for initialization
 	void Start () {
 		lastInterval = Time.time;
-		nextInterval = Time.time + (Random.value * 5 + 3);
+		nextInterval = Time.time + (Random.value * 5 + 1);
 		enemyStartPosition = transform.position;
 		moveDirection = 1;
+		anim = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if(anim.GetBool("Attack")){
+			anim.SetBool("Attack", false);
+		}
+
 		if (Time.time >= nextInterval) {
 			Debug.Log ("Attempting jump");
-			Jump ();
-			nextInterval = Time.time + (Random.value * 5 + 3);
+			//Jump ();
+			Attack();
+			nextInterval = Time.time + (Random.value * 5 + 1);
 		}
 		if (transform.position.x <= enemyStartPosition.x)
 			moveDirection = 1;
@@ -44,5 +52,9 @@ public class EnemyAI : MonoBehaviour {
 	{
 		Debug.Log ("Attempting jump");
 		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
+	}
+
+	public void Attack(){
+		anim.SetBool("Attack", true);
 	}
 }

@@ -21,4 +21,11 @@ public class KillEnemy : MonoBehaviour {
             Destroy(other.gameObject);
         }
     }
+
+	void OnCollisionEnter(Collision col){
+		Debug.Log("Collision");
+		if(col.gameObject.name == "Enemy"){
+			Destroy (col.gameObject);
+		}
+	}
 }

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 		if (player.transform.position.y <= -10) {
 			player.changeHealth(- player.health);
 		}
-		Debug.Log("Player y= " + player.transform.position.y);
+		//Debug.Log("Player y= " + player.transform.position.y);
 
 	}
 

@@ -97,12 +97,18 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.A))
         {
 			movePlayer (moveSpeed, -1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
+			if(transform.rotation.y == 0){
+				transform.rotation = Quaternion.AngleAxis(180f, Vector3.forward);
+			}
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
 			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
+			if(transform.rotation.y == 180){
+				transform.rotation = Quaternion.AngleAxis(0f, Vector3.back);
+			}
         }
 
        
