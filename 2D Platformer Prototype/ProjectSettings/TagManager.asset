@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - PlayerHealth
   - PlayerStartPoint
+  - Platform
   layers:
   - Default
   - TransparentFX

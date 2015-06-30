@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     private float moveVelocity;
 	private GameManager gameManager;
     private Animator anim;
+	private bool onPlatform = false;
 
 	//Player lives
 	public int lives = 3;
@@ -30,6 +31,9 @@ public class Player : MonoBehaviour {
 	public bool grounded;
     // Is the player allowed to doublejump?
     private bool doubleJumped;
+
+	private float distance = 2.2f;
+	private RaycastHit hit;
 
 	// Use this for initialization
 	void Start () {
@@ -57,6 +61,9 @@ public class Player : MonoBehaviour {
 			if(hit.collider.tag == "Ground"){
 				grounded = true;
 			}
+			if (hit.collider.tag == "Platform"){
+				onPlatform = true;
+			}
 		}
 		//check if we need to reset some variables from animator
 		if (anim.GetBool("MeleeAttack"))
@@ -83,7 +90,7 @@ public class Player : MonoBehaviour {
         // Jump code. If space is pressed and the player is touching the ground then run Jump function.
         if (Input.GetKeyDown(KeyCode.Space))
         {
-			if (grounded) {
+			if (grounded || onPlatform) {
 				doubleJumped = false;
 				Jump ();
 			}
@@ -121,17 +128,16 @@ public class Player : MonoBehaviour {
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
+		//Determines the angle of the collision
+		Vector3 dir = col.gameObject.transform.position - transform.position;
+		dir = col.gameObject.transform.InverseTransformDirection(dir);
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+//		Debug.Log("Angle of collision " + angle);
+
 		if (col.gameObject.tag == "Enemy") {
-
-			//Determines the angle of the collision
-			Vector3 dir = col.gameObject.transform.position - transform.position;
-			dir = col.gameObject.transform.InverseTransformDirection(dir);
-			float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
 			//if at a downward, vertical angle, destroy enemy, else hurt player
 			if (angle <= -60 && angle >= -120) {
 				Destroy (col.gameObject);
-				Debug.Log("Angle of attack was " + angle);
 				gameManager.changeScore (100);
 			}
 			else {
@@ -144,8 +150,17 @@ public class Player : MonoBehaviour {
 
 			}
 		}
+		if (col.gameObject.tag == "Platform"){
+			float diffX = col.rigidbody.velocity.x-GetComponent<Rigidbody>().velocity.x;
+			GetComponent<Rigidbody>().velocity = new Vector2(GetComponent<Rigidbody>().velocity.x + diffX, GetComponent<Rigidbody>().velocity.y);
+		}
 	}
-
+	void OnCollisionExit(Collision col)
+	{
+		if (col.gameObject.tag == "Platform"){
+			onPlatform = false;
+		}
+	}
     // Jump function.
     public void Jump()
     {
@@ -155,7 +170,12 @@ public class Player : MonoBehaviour {
     // Move function.
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
-		GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
+		if (onPlatform && xDirection > 0)
+			GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed + Mathf.Abs(GetComponent<Rigidbody>().velocity.x), yMoveSpeed * yDirection);
+		else if (onPlatform && xDirection < 0)
+			GetComponent<Rigidbody>().velocity = new Vector2(-(xMoveSpeed + Mathf.Abs(GetComponent<Rigidbody>().velocity.x)), yMoveSpeed * yDirection);
+		else
+			GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 
 	public void changeHealth(int change){
