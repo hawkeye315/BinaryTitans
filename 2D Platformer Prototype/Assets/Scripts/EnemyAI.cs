@@ -32,14 +32,14 @@ public class EnemyAI : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(anim.GetBool("Attack")){
-			anim.SetBool("Attack", false);
-		}
+//		if(anim.GetBool("Attack")){
+//			anim.SetBool("Attack", false);
+//		}
 
 		if (Time.time >= nextInterval) {
 			Debug.Log ("Attempting jump");
-			//Jump ();
-			Attack();
+			Jump ();
+			//Attack();
 			nextInterval = Time.time + (Random.value * 5 + 1);
 		}
 		if (transform.position.x <= enemyStartPosition.x)
