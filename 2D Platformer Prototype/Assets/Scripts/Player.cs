@@ -34,12 +34,13 @@ public class Player : MonoBehaviour {
 
 	private float distance = 2.2f;
 	private RaycastHit hit;
+	private Rigidbody playerBody;
 
 	// Use this for initialization
 	void Start () {
 		gameManager = FindObjectOfType<GameManager>();
         anim = GetComponent<Animator>();
-
+		playerBody = GetComponent<Rigidbody>();
 		lives = 3;
         
 	}
@@ -103,19 +104,15 @@ public class Player : MonoBehaviour {
         // Left Movement
         if (Input.GetKey(KeyCode.A))
         {
-			movePlayer (moveSpeed, -1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
-			if(transform.rotation.y == 0){
-				transform.rotation = Quaternion.AngleAxis(180f, Vector3.forward);
-			}
+			transform.eulerAngles = new Vector3(0,180,0);
+			movePlayer (moveSpeed, -1, playerBody.velocity.y +.2f, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
-			movePlayer (moveSpeed, 1, GetComponent<Rigidbody>().velocity.y +.2f, 1);
-			if(transform.rotation.y == 180){
-				transform.rotation = Quaternion.AngleAxis(0f, Vector3.back);
-			}
+			transform.eulerAngles = new Vector3(0,0,0);
+			movePlayer (moveSpeed, 1, playerBody.velocity.y +.2f, 1);
         }
 
        
@@ -151,8 +148,8 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (col.gameObject.tag == "Platform"){
-			float diffX = col.rigidbody.velocity.x-GetComponent<Rigidbody>().velocity.x;
-			GetComponent<Rigidbody>().velocity = new Vector2(GetComponent<Rigidbody>().velocity.x + diffX, GetComponent<Rigidbody>().velocity.y);
+			float diffX = col.rigidbody.velocity.x-playerBody.velocity.x;
+			playerBody.velocity = new Vector2(playerBody.velocity.x + diffX, playerBody.velocity.y);
 		}
 	}
 	void OnCollisionExit(Collision col)
@@ -164,18 +161,18 @@ public class Player : MonoBehaviour {
     // Jump function.
     public void Jump()
     {
-        GetComponent<Rigidbody>().velocity = new Vector2(0, jumpHeight);  
+        playerBody.velocity = new Vector2(0, jumpHeight);  
     }
     
     // Move function.
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
 		if (onPlatform && xDirection > 0)
-			GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed + Mathf.Abs(GetComponent<Rigidbody>().velocity.x), yMoveSpeed * yDirection);
+			playerBody.velocity = new Vector2(xMoveSpeed + Mathf.Abs(playerBody.velocity.x), yMoveSpeed * yDirection);
 		else if (onPlatform && xDirection < 0)
-			GetComponent<Rigidbody>().velocity = new Vector2(-(xMoveSpeed + Mathf.Abs(GetComponent<Rigidbody>().velocity.x)), yMoveSpeed * yDirection);
+			playerBody.velocity = new Vector2(-(xMoveSpeed + Mathf.Abs(playerBody.velocity.x)), yMoveSpeed * yDirection);
 		else
-			GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
+			playerBody.velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 
 	public void changeHealth(int change){
