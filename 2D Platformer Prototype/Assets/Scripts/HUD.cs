@@ -5,7 +5,7 @@ using System.Collections;
 public class HUD : MonoBehaviour {
 
 	private GameManager gameManager;
-	
+	private Player player;	
 	public Text txt;
 	private int currentScore=0;
 	private int currentHealth=100;
@@ -16,13 +16,14 @@ public class HUD : MonoBehaviour {
         txt = gameObject.GetComponent<Text>();
         txt.text = "Score : " + currentScore + "   Health : " + currentHealth;
         gameManager = FindObjectOfType<GameManager>();
+		player = FindObjectOfType<Player>();
     }
 
 	// Update is called once per frame
 	void Update () {
 		txt.text="Score : " + currentScore + "   Health : " + currentHealth;
 		currentScore = gameManager.getScore();
-		currentHealth = gameManager.getHealth();
-		txt.text="Lives : " + gameManager.getLives() + "\nScore : " + gameManager.getScore() + "\nHealth : " + gameManager.getHealth();
+		currentHealth = player.getHealth();
+		txt.text="Lives : " + player.getLives() + "\nScore : " + gameManager.getScore() + "\nHealth : " + player.getHealth();
 	}
 }

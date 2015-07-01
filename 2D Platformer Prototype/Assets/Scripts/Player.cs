@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class Player : MonoBehaviour {
     
     // Move controls
     public float moveSpeed;
@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour {
     private float moveVelocity;
 	private GameManager gameManager;
     private Animator anim;
+
+	//Player lives
+	public int lives = 3;
+	public int health = 100;
+	public int score = 0;
 
     // Ground check gameobject under Player
     public Transform groundCheck;
@@ -25,6 +30,8 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		gameManager = FindObjectOfType<GameManager>();
         anim = GetComponent<Animator>();
+
+		lives = 3;
         
 	}
 
@@ -90,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 				gameManager.changeScore (100);
 			}
 			else {
-				gameManager.changeHealth(-10);
+				changeHealth(-10);
 				//if player is to left of enemy, push left, otherwise right
 				if (transform.position.x <= col.gameObject.transform.position.x)
 					movePlayer (moveSpeed, -1, moveSpeed, 1);
@@ -110,5 +117,25 @@ public class PlayerController : MonoBehaviour {
 	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
 		GetComponent<Rigidbody>().velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
+	}
+
+	public void changeHealth(int change){
+		health += change;
+		if (health <= 0) {
+			health = 100;
+			gameManager.RespawnPlayer();
+		} else if (health > 100)
+			health = 100;
+	}
+	// Getters
+	public int getLives()
+	{
+		return lives;
+	}
+
+
+	public int getHealth()
+	{
+		return health;
 	}
 }
