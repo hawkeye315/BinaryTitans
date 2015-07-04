@@ -3,13 +3,13 @@ using System.Collections;
 
 public class UiManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	//Connected to BtnStartGame
+	public void StartGame(){
+		Application.LoadLevel("Level1");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	//Connected to BtnQuit
+	public void QuitGame(){
+		Application.Quit();
 	}
 }
