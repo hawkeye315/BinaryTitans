@@ -13,7 +13,7 @@ public class HUD : MonoBehaviour {
 	// Use this for initialization
     void Start()
     {
-        txt = gameObject.GetComponent<Text>();
+        //txt = gameObject.GetComponent<Text>();
         txt.text = "Score : " + currentScore + "   Health : " + currentHealth;
         gameManager = FindObjectOfType<GameManager>();
 		player = FindObjectOfType<Player>();
@@ -21,7 +21,7 @@ public class HUD : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		txt.text="Score : " + currentScore + "   Health : " + currentHealth;
+		//txt.text="Score : " + currentScore + "   Health : " + currentHealth;
 		currentScore = gameManager.getScore();
 		currentHealth = player.getHealth();
 		txt.text="Lives : " + player.getLives() + "\nScore : " + gameManager.getScore() + "\nHealth : " + player.getHealth();

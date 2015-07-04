@@ -5,10 +5,7 @@ public class GameManager : MonoBehaviour {
 
     // Player controller script, will assign on start
     private Player player;
-	private CameraController camera;
     public float respawnDelay;
-	private float[] checkpoint = {0,3,20,3};
-	private int currentCheckpoint = 0;
 
 	private int score = 0;
 
@@ -16,43 +13,40 @@ public class GameManager : MonoBehaviour {
 	// Find the player script in game.
 	void Start () {
         player = FindObjectOfType<Player>();
-		player.transform.position = new Vector3(2, 3, 0);
-		camera = FindObjectOfType<CameraController>();
+		player.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPoint").transform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		if (player.transform.position.y <= -10) {
-			RespawnPlayer ();
+			player.changeHealth(- player.health);
 		}
-		Debug.Log("Player y= " + player.transform.position.y);
+		//Debug.Log("Player y= " + player.transform.position.y);
 
 	}
 
-    public void RespawnPlayer()
-    {
-		float[] cameraPosition = new float[3];
-		cameraPosition [0] = checkpoint[2*currentCheckpoint];
-		cameraPosition [1] = checkpoint[2*currentCheckpoint+1];
-		camera.SetCameraPosition (cameraPosition);
-		StartCoroutine("RespawnPlayerCo");
-    }
+    //public void RespawnPlayer()
+    //{
+	//	StartCoroutine("RespawnPlayerCo");
+    //}
 
     // Respawn Player at current checkpoint assigned.
     // Once out of lives, respawn is at starting checkpoint. Resets lives to 3.
-    public IEnumerator RespawnPlayerCo()
+    //public IEnumerator RespawnPlayerCo()
+	public void RespawnPlayer()
     {
-        player.health = 100;
 		player.lives -= 1;
-        yield return new WaitForSeconds(respawnDelay);
+		player.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+        //yield return new WaitForSeconds(respawnDelay);
 		if (player.lives >= 0)
-			player.transform.position = new Vector3(checkpoint[2*currentCheckpoint], checkpoint[2*currentCheckpoint+1], 0);
+			player.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPoint").transform.position; 
 		else {
-			player.transform.position = new Vector3(0, 3, 0);
+			player.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPoint").transform.position;  
 			player.lives = 3;
 			score = 0;
 		}
+        player.health = 100;
 		Debug.Log("Respawn Player.");
     }
 
