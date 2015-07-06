@@ -3,58 +3,75 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
 
-	// Movements
 	public float moveSpeed;
-	public float moveDistance;
-
-	private Vector3 enemyStartPosition;
-	private double lastInterval; // Last interval end time
-	private double nextInterval;
-
-	// Random jump height
-	public float jumpHeight;
+	private double lastInterval, nextInterval; // Last interval end time
 	private float moveVelocity;
-	// Direction (+ = Right), (- = Left)
 	private int moveDirection;
 	private bool grounded;
 	private int health;
-
 	private Animator anim;
+	public int enemyType; //0-ground, 1-flying, 2-boss;
+	private Vector3 downV3, nextPosition;
+	public float minX, maxX, minY, maxY, rangeX, rangeY;
 
-	// Use this for initialization
+
 	void Start () {
+		rangeX = maxX - minX;
+		rangeY = maxY - minY;
 		lastInterval = Time.time;
 		nextInterval = Time.time + (Random.value * 5 + 1);
-		enemyStartPosition = transform.position;
 		moveDirection = 1;
 		anim = GetComponent<Animator>();
+		nextPosition = transform.position;
+		downV3 = transform.TransformDirection (Vector3.down);
+		if (enemyType == 1)
+			GetComponent<Rigidbody> ().useGravity = false;
 	}
 
-	// Update is called once per frame
 	void Update () {
-//		if(anim.GetBool("Attack")){
-//			anim.SetBool("Attack", false);
-//		}
-
-		if (Time.time >= nextInterval) {
-			Debug.Log ("Attempting jump");
-			Jump ();
-			//Attack();
-			nextInterval = Time.time + (Random.value * 5 + 1);
+		switch (enemyType) {
+		case 0:
+			if (!Physics.Raycast (new Vector3 (transform.position.x + 1, transform.position.y), downV3, 5)) {
+				moveDirection = -1;
+			}
+			if (!Physics.Raycast (new Vector3 (transform.position.x - 1, transform.position.y), downV3, 5)) {
+				moveDirection = 1;
+			}
+			if (Time.time >= nextInterval) {
+				Jump (Random.value * 5 + 5);
+				nextInterval = Time.time + (Random.value * 5 + 1);
+			}
+			GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
+			break;
+		case 1:
+			if (Vector3.Distance(transform.position, nextPosition) <= 1){
+				Debug.Log("going to next position");
+				nextPosition = new Vector3 (minX + Random.value * rangeX, minY + Random.value * rangeY, transform.position.z);
+			}
+			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed);
+			Debug.Log("transform.position = " + transform.position.ToString() + ", nextPosition = " + nextPosition.ToString());
+			break;
+		case 2:
+			break;
 		}
-		if (transform.position.x <= enemyStartPosition.x)
-			moveDirection = 1;
-		else if (transform.position.x >= enemyStartPosition.x + moveDistance)
-			moveDirection = -1;
-		GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y + .3F, GetComponent<Rigidbody>().velocity.z);
+
+//			if (attributes[1]) Shoot (0f + (moveDirection * 90));//
+//			if (attributes[2]) Attack(moveDirection);
+		//		if(anim.GetBool("Attack")){
+		//			anim.SetBool("Attack", false);
+		//		}
 	}
-	public void Jump()
+	public void Jump(float jumpHeight)
 	{
 		Debug.Log ("Attempting jump");
 		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
 	}
 
-	public void Attack(){
+	public void Attack(int direction){
 		anim.SetBool("Attack", true);
+	}
+	public void Shoot(float angle)
+	{
+
 	}
 }

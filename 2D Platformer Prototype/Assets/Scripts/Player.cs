@@ -144,6 +144,7 @@ public class Player : MonoBehaviour {
 				else
 					movePlayer (moveSpeed, 1, moveSpeed, 1);
 				changeHealth(-10);
+				col.rigidbody.velocity = Vector3.zero;
 
 			}
 		}
