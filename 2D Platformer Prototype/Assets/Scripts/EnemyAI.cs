@@ -97,10 +97,10 @@ public class EnemyAI : MonoBehaviour {
 				moveDirection = -1;
 		}
 	}
-	void OnBecomeInvisible(){
+	void OnBecameInvisible(){
 		visible = false;
 	}
-	void OnBecomeVisible(){
+	void OnBecameVisible(){
 		visible = true;
 	}
 	void OnWillRenderObject(){
