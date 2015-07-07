@@ -16,7 +16,7 @@ public class KillEnemy : MonoBehaviour {
 
     void OnTriggerEnter(Collision other)
     {
-        if (other.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             Destroy(other.gameObject);
         }
