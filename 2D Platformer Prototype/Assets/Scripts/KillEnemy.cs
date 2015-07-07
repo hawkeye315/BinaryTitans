@@ -14,9 +14,9 @@ public class KillEnemy : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collision other)
     {
-        if (other.name == "Enemy")
+        if (other.tag == "Enemy")
         {
             Destroy(other.gameObject);
         }
@@ -24,7 +24,7 @@ public class KillEnemy : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 		Debug.Log("Collision");
-		if(col.gameObject.name == "Enemy"){
+		if(col.gameObject.tag == "Enemy"){
 			Destroy (col.gameObject);
 		}
 	}
