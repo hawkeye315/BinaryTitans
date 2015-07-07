@@ -13,9 +13,11 @@ public class EnemyAI : MonoBehaviour {
 	private Vector3 downV3, nextPosition;
 	public float minX, maxX, minY, maxY, rangeX, rangeY;
 	private Transform player;
+	private bool visible;
 
 
 	void Start () {
+		visible = false;
 		trigger = false;
 		move = true;
 		player = GameObject.FindObjectOfType<Player>().transform;
@@ -53,22 +55,22 @@ public class EnemyAI : MonoBehaviour {
 			}
 			if (trigger) {
 				Jump (Random.value * 5 + 5);
-				if (Mathf.Abs(dir.x) <= 20)
+				if (visible)
 					Shoot (angle);
 			}
 			GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
 			break;
 		case 1:
 //			if (Vector3.Distance(transform.position, nextPosition) <= 1){
+			if(player.position.x > transform.position.x)
+				moveDirection = 1;
+			else
+				moveDirection = -1;
 			if (move){
 					nextPosition = new Vector3 (minX + Random.value * rangeX, minY + Random.value * rangeY, transform.position.z);
-				if(player.position.x > transform.position.x)
-					moveDirection = 1;
-				else
-					moveDirection = -1;
 			}
 			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed);
-			if (Mathf.Abs(dir.x) <= 20 && Mathf.Abs(dir.y) <= 20 && trigger)
+			if (visible && trigger)
 				Shoot (angle);
 			break;
 		case 2:
@@ -94,6 +96,15 @@ public class EnemyAI : MonoBehaviour {
 			else if (col.gameObject.tag != "Player")
 				moveDirection = -1;
 		}
+	}
+	void OnBecomeInvisible(){
+		visible = false;
+	}
+	void OnBecomeVisible(){
+		visible = true;
+	}
+	void OnWillRenderObject(){
+		visible = true;
 	}
 	public void Jump(float jumpHeight)
 	{
