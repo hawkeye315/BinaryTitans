@@ -14,18 +14,11 @@ public class KillEnemy : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
             Destroy(other.gameObject);
         }
     }
-
-	void OnCollisionEnter(Collision col){
-		Debug.Log("Collision");
-		if(col.gameObject.tag == "Enemy"){
-			Destroy (col.gameObject);
-		}
-	}
 }
