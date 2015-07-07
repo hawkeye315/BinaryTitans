@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 
 		if (player.transform.position.y <= -10) {
-			player.changeHealth(- player.health);
+			player.ChangeHealth(- player.health);
 		}
 		//Debug.Log("Player y= " + player.transform.position.y);
 
@@ -50,12 +50,12 @@ public class GameManager : MonoBehaviour {
 		Debug.Log("Respawn Player.");
     }
 
-	public int getScore()
+	public int GetScore()
 	{
 		return score;
 	}
 
-	public void changeScore(int change){
+	public void ChangeScore(int change){
 		score += change;
 	}
 

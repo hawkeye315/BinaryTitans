@@ -22,8 +22,8 @@ public class HUD : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//txt.text="Score : " + currentScore + "   Health : " + currentHealth;
-		currentScore = gameManager.getScore();
-		currentHealth = player.getHealth();
-		txt.text="Lives : " + player.getLives() + "\nScore : " + gameManager.getScore() + "\nHealth : " + player.getHealth();
+		currentScore = gameManager.GetScore();
+		currentHealth = player.GetHealth();
+		txt.text="Lives : " + player.GetLives() + "\nScore : " + gameManager.GetScore() + "\nHealth : " + player.GetHealth();
 	}
 }

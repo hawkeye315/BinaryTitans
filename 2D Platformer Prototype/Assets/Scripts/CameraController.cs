@@ -4,15 +4,12 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 	public Transform player;
 
-	private Vector3 cameraVector;
 	public float[] cameraPosition = new float[3];
 	public float forwardCameraBuffer, rearCameraBuffer;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindObjectOfType<Player>().transform;
-
-		cameraVector = transform.position;
 		cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
 		cameraPosition [1] = player.transform.position.y;
 		cameraPosition [2] = transform.position.z;

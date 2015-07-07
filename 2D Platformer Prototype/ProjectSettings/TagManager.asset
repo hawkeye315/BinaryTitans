@@ -10,6 +10,7 @@ TagManager:
   - PlayerHealth
   - PlayerStartPoint
   - Platform
+  - Bullet
   layers:
   - Default
   - TransparentFX

@@ -32,7 +32,7 @@ public class Player : MonoBehaviour {
     // Is the player allowed to doublejump?
     private bool doubleJumped;
 
-	private float distance = 2.2f;
+//	private float distance = 2.2f;
 	private RaycastHit hit;
 	private Rigidbody playerBody;
 
@@ -105,14 +105,14 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.A))
         {
 			transform.eulerAngles = new Vector3(0,180,0);
-			movePlayer (moveSpeed, -1, playerBody.velocity.y +.2f, 1);
+			MovePlayer (moveSpeed, -1, playerBody.velocity.y +.2f, 1);
         }
 
         // Right movement
         if (Input.GetKey(KeyCode.D))
         {
 			transform.eulerAngles = new Vector3(0,0,0);
-			movePlayer (moveSpeed, 1, playerBody.velocity.y +.2f, 1);
+			MovePlayer (moveSpeed, 1, playerBody.velocity.y +.2f, 1);
         }
 
        
@@ -121,33 +121,34 @@ public class Player : MonoBehaviour {
             anim.SetBool("MeleeAttack", true);
         }
 	}
-
-	//On maintained collision with another object
-	void OnCollisionStay(Collision col)
-	{
+	void OnCollisionEnter(Collision col){
 		//Determines the angle of the collision
 		Vector3 dir = col.gameObject.transform.position - transform.position;
 		dir = col.gameObject.transform.InverseTransformDirection(dir);
 		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-//		Debug.Log("Angle of collision " + angle);
-
+		//		Debug.Log("Angle of collision " + angle);
+		
 		if (col.gameObject.tag == "Enemy") {
 			//if at a downward, vertical angle, destroy enemy, else hurt player
-			if (angle <= -60 && angle >= -120) {
+			if (angle <= -60 && angle >= -120 && col.gameObject.tag == "Enemy") {
 				Destroy (col.gameObject);
-				gameManager.changeScore (100);
+				gameManager.ChangeScore (100);
 			}
 			else {
 				//if player is to left of enemy, push left, otherwise right
 				if (transform.position.x <= col.gameObject.transform.position.x)
-					movePlayer (moveSpeed, -1, moveSpeed, 1);
+					HurtPlayer("Left", 10);
 				else
-					movePlayer (moveSpeed, 1, moveSpeed, 1);
-				changeHealth(-10);
+					HurtPlayer("Right", 10);
+				ChangeHealth(-10);
 				col.rigidbody.velocity = Vector3.zero;
-
+				
 			}
 		}
+	}
+	//On maintained collision with another object
+	void OnCollisionStay(Collision col)
+	{
 		if (col.gameObject.tag == "Platform"){
 			float diffX = col.rigidbody.velocity.x-playerBody.velocity.x;
 			playerBody.velocity = new Vector2(playerBody.velocity.x + diffX, playerBody.velocity.y);
@@ -164,9 +165,16 @@ public class Player : MonoBehaviour {
     {
         playerBody.velocity = new Vector2(0, jumpHeight);  
     }
+	public void HurtPlayer(string direction, int damage){
+		if (direction == "Left")
+			MovePlayer (moveSpeed, -1, moveSpeed, 1);
+		else if (direction == "Right")
+			MovePlayer (moveSpeed, 1, moveSpeed, 1);
+		ChangeHealth (-damage);
+	}
     
     // Move function.
-	private void movePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
+	private void MovePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
 		if (onPlatform && xDirection > 0)
 			playerBody.velocity = new Vector2(xMoveSpeed + Mathf.Abs(playerBody.velocity.x), yMoveSpeed * yDirection);
@@ -176,15 +184,16 @@ public class Player : MonoBehaviour {
 			playerBody.velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 
-	public void changeHealth(int change){
+	public void ChangeHealth(int change){
 		//If the player has taken damage recently we dont want him to take it again
 		if(takenDamage){
 			return;
 		}
-		anim.SetBool("TakenDamage",true);
 		health += change;
-		takenDamage = true;
-
+		if (change < 0) {
+			anim.SetBool ("TakenDamage", true);
+			takenDamage = true;
+		}
 		if (health <= 0) {
 			gameManager.RespawnPlayer();
 			takenDamage = true;
@@ -192,13 +201,11 @@ public class Player : MonoBehaviour {
 			health = 100;
 	}
 	// Getters
-	public int getLives()
+	public int GetLives()
 	{
 		return lives;
 	}
-
-
-	public int getHealth()
+	public int GetHealth()
 	{
 		return health;
 	}
