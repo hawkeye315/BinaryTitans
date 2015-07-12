@@ -125,12 +125,12 @@ public class Player : MonoBehaviour {
 		//Determines the angle of the collision
 		Vector3 dir = col.gameObject.transform.position - transform.position;
 		dir = col.gameObject.transform.InverseTransformDirection(dir);
-		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		float angle = Mathf.Atan2(dir.y, dir.x);
 		//		Debug.Log("Angle of collision " + angle);
 		
 		if (col.gameObject.tag == "Enemy") {
 			//if at a downward, vertical angle, destroy enemy, else hurt player
-			if (angle <= -60 && angle >= -120 && col.gameObject.tag == "Enemy") {
+			if (angle <= -(Mathf.PI/3) && angle >= -(2*Mathf.PI/3) && col.gameObject.tag == "Enemy") {
 				Destroy (col.gameObject);
 				gameManager.ChangeScore (100);
 			}

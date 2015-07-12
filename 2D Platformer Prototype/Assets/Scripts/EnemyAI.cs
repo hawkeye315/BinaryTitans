@@ -3,17 +3,17 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
 
-	public float moveSpeed;
-	private double nextInterval, nextMoveInterval; // Last interval end time
-	private int moveDirection;
-	private bool grounded,trigger,move;
-	private int health;
+	public float moveSpeed; //move speed. ground walkers are less sensitive
+	private double nextTriggerInterval, nextMoveInterval; // Last interval end time
+	private int moveDirection; //+1 = right, -1 = left
+	private bool grounded,trigger,move; //if on ground, if ready to shoot, if ready to move
+	private int health; //haven't implemented this yet
 	private Animator anim;
 	public int enemyType; //0-ground, 1-flying, 2-boss;
-	private Vector3 downV3, nextPosition;
-	public float minX, maxX, minY, maxY, rangeX, rangeY;
-	private Transform player;
-	private bool visible;
+	private Vector3 downV3, nextPosition; //next position is for a flier to determine next point in space
+	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
+	private Transform player; //used to locate player for aiming
+	private bool visible; //is enemy in camera's view
 
 
 	void Start () {
@@ -21,24 +21,24 @@ public class EnemyAI : MonoBehaviour {
 		trigger = false;
 		move = true;
 		player = GameObject.FindObjectOfType<Player>().transform;
-		rangeX = maxX - minX;
+		rangeX = maxX - minX; //calculate range of X and Y
 		rangeY = maxY - minY;
-		nextInterval = Time.time + (Random.value * 5 + 1);
-		nextMoveInterval = Time.time + (Random.value * 3 + 2);
+		nextTriggerInterval = Time.time + (Random.value * 5 + 1); //randomly pick the next time for shooting between 1 and 6 seconds
+		nextMoveInterval = Time.time + (Random.value * 3 + 2); //randomly pick next move between 2 and 5 seconds (2 + rand 3)
 		moveDirection = 1;
 		anim = GetComponent<Animator>();
 		nextPosition = transform.position;
-		downV3 = transform.TransformDirection (Vector3.down);
+		downV3 = transform.TransformDirection (Vector3.down); //vector for downward raycast. used to detecting edge of platform
 		if (enemyType == 1)
 			GetComponent<Rigidbody> ().useGravity = false;
 	}
 
 	void Update () {
 		Vector3 dir = player.position - transform.position;
-		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-		if (Time.time >= nextInterval) {
+		float angle = Mathf.Atan2(dir.y, dir.x); //determine angle between Enemy and Player
+		if (Time.time >= nextTriggerInterval) {
 			trigger = true;
-			nextInterval = Time.time + (Random.value * 5 + 1);
+			nextTriggerInterval = Time.time + (Random.value * 5 + 1);
 		}
 		if (Time.time >= nextMoveInterval) {
 			move = true;
@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour {
 		}
 
 		switch (enemyType) {
-		case 0:
+		case 0: //ground walker - Ray casting on downward in front and behind to detect if there is something to walk on
 			if (!Physics.Raycast (new Vector3 (transform.position.x + 1, transform.position.y), downV3, 5)) {
 				moveDirection = -1;
 			}
@@ -60,9 +60,9 @@ public class EnemyAI : MonoBehaviour {
 			}
 			GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
 			break;
-		case 1:
+		case 1://hover enemy
 //			if (Vector3.Distance(transform.position, nextPosition) <= 1){
-			if(player.position.x > transform.position.x)
+			if(player.position.x > transform.position.x) //Flying enemy is always facing player
 				moveDirection = 1;
 			else
 				moveDirection = -1;
@@ -73,11 +73,11 @@ public class EnemyAI : MonoBehaviour {
 			if (visible && trigger)
 				Shoot (angle);
 			break;
-		case 2:
+		case 2://boss
 			break;
 		}
-		trigger = false;
-		move = false;
+		trigger = false; //reset trigger
+		move = false; //reset move
 		if (moveDirection >= 0)
 			transform.eulerAngles = new Vector3(0,0,0);
 		else
@@ -91,12 +91,13 @@ public class EnemyAI : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision col){
 		if (col.gameObject.tag != "Ground") {
-			if (col.gameObject.transform.position.x < transform.position.x && col.gameObject.tag != "Player")
+			if (col.gameObject.transform.position.x < transform.position.x && col.gameObject.tag != "Player") //if collision with something other than player or ground, turn around
 				moveDirection = 1;
 			else if (col.gameObject.tag != "Player")
 				moveDirection = -1;
 		}
 	}
+	//below are the controls for determining if the enemy is in view of the camera or not
 	void OnBecameInvisible(){
 		visible = false;
 	}
@@ -117,15 +118,15 @@ public class EnemyAI : MonoBehaviour {
 	public void Shoot(float angle)
 	{
 		GameObject bullet;
-		if ((angle < 90 && angle > -90) && moveDirection > 0) {
-			bullet = (GameObject)Instantiate (Resources.Load ("Bullet"), new Vector3 (transform.position.x + 2.5f, transform.position.y), Quaternion.Euler (new Vector3 (0, 0, angle + 90)));
-			bullet.GetComponent<Bullet> ().scaleX = Mathf.Cos (angle * Mathf.PI / 180);
-			bullet.GetComponent<Bullet> ().scaleY = Mathf.Sin (angle * Mathf.PI / 180);
+		if ((angle < (Mathf.PI/2) && angle > -(Mathf.PI/2)) && moveDirection > 0) {
+			bullet = (GameObject)Instantiate (Resources.Load ("Bullet"), new Vector3 (transform.position.x + 2.5f, transform.position.y), Quaternion.Euler (new Vector3 (0, 0, (angle*Mathf.Rad2Deg) + 90)));
+			bullet.GetComponent<Bullet> ().scaleX = Mathf.Cos (angle);
+			bullet.GetComponent<Bullet> ().scaleY = Mathf.Sin (angle);
 		}
-		else if ((angle > 90 || angle < -90) && moveDirection < 0) {
-			bullet = (GameObject)Instantiate(Resources.Load("Bullet"), new Vector3(transform.position.x - 2.5f, transform.position.y), Quaternion.Euler(new Vector3(0,0,angle+90)));
-			bullet.GetComponent<Bullet>().scaleX = Mathf.Cos(angle * Mathf.PI / 180);
-			bullet.GetComponent<Bullet>().scaleY = Mathf.Sin(angle * Mathf.PI / 180);
+		else if ((angle > (Mathf.PI/2) || angle < -(Mathf.PI/2)) && moveDirection < 0) {
+			bullet = (GameObject)Instantiate(Resources.Load("Bullet"), new Vector3(transform.position.x - 2.5f, transform.position.y), Quaternion.Euler(new Vector3(0,0,(angle*Mathf.Rad2Deg)+90)));
+			bullet.GetComponent<Bullet>().scaleX = Mathf.Cos(angle);
+			bullet.GetComponent<Bullet>().scaleY = Mathf.Sin(angle);
 		}
 	}
 }

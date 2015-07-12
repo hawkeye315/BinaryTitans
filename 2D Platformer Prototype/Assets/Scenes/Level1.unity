@@ -508,7 +508,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &215612013
@@ -554,7 +555,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &216042574 stripped
@@ -821,7 +823,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &574379460
@@ -971,7 +974,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &774074164
@@ -1113,7 +1117,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &851912249
@@ -1209,7 +1214,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (9)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &941307451
@@ -1295,7 +1301,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (7)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &990988472
@@ -1606,7 +1613,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1335886048 stripped
@@ -1953,7 +1965,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (10)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1557461907
@@ -1999,7 +2012,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1582175633 stripped
@@ -2157,7 +2171,8 @@ Prefab:
       propertyPath: m_Name
       value: Floor1_1x4 (8)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1708191172
@@ -2767,7 +2782,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 06d1cc7d2f599bd46a67ce8ec5dcc0d6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1973583628
