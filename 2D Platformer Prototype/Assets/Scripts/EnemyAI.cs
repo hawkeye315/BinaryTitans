@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour {
 //		}
 
 		if (Time.time >= nextInterval) {
-			Debug.Log ("Attempting jump");
+			//Debug.Log ("Attempting jump");
 			Jump ();
 			//Attack();
 			nextInterval = Time.time + (Random.value * 5 + 1);
@@ -50,7 +50,7 @@ public class EnemyAI : MonoBehaviour {
 	}
 	public void Jump()
 	{
-		Debug.Log ("Attempting jump");
+		//Debug.Log ("Attempting jump");
 		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
 	}
 
