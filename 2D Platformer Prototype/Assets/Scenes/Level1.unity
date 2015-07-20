@@ -6751,7 +6751,7 @@ GameObject:
   m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -3545028842045912814, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -6762,7 +6762,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1012464476}
   m_LocalRotation: {x: -.497016609, y: .500110328, z: -.507464468, w: .495322078}
-  m_LocalPosition: {x: -.219999999, y: -1.33000004, z: -.300000012}
+  m_LocalPosition: {x: -.219999999, y: -1.33000004, z: 0}
   m_LocalScale: {x: 2.4260242, y: 3.50456929, z: 1.00122046}
   m_Children: []
   m_Father: {fileID: 1773023702}
@@ -11995,6 +11995,7 @@ GameObject:
   - 136: {fileID: 1773023700}
   - 23: {fileID: 1773023699}
   - 114: {fileID: 1773023703}
+  - 114: {fileID: 1773023704}
   m_Layer: 9
   m_Name: Weapon
   m_TagString: Untagged
@@ -12053,8 +12054,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1773023698}
   m_LocalRotation: {x: .497016609, y: -.500110328, z: .507464468, w: .495322078}
-  m_LocalPosition: {x: .699999988, y: .360000014, z: -.0799999982}
-  m_LocalScale: {x: .999867976, y: .206067845, z: .142663419}
+  m_LocalPosition: {x: .699999988, y: .360000014, z: 0}
+  m_LocalScale: {x: .104225568, y: .167051762, z: .0900000036}
   m_Children:
   - {fileID: 1012464477}
   m_Father: {fileID: 33278075}
@@ -12070,11 +12071,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8dc7499e06e9ac4dbfd641d22c42bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 4
+  fireRate: 40
   damage: 10
-  whatToHit:
-    serializedVersion: 2
-    m_Bits: 4294966779
+  BulletTrailPrefab: {fileID: 482640, guid: 95a6e89b8ad10044585e046563f892ec, type: 2}
+  MuzzleFlashPrefab: {fileID: 485586, guid: 80407ff329e2d774ebaf1b86c58499d6, type: 2}
+  effectSpawnRate: 10
+--- !u!114 &1773023704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1773023698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6029ab31d484743a857c0230d5bb88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1776211535
 Prefab:
   m_ObjectHideFlags: 0
@@ -12258,7 +12270,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 451860, guid: cc8750888dd30914abf059320a102089, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6517760, guid: cc8750888dd30914abf059320a102089, type: 2}
       propertyPath: m_IsTrigger
@@ -14335,7 +14347,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
 --- !u!4 &2027023648 stripped
 Transform:
   m_PrefabParentObject: {fileID: 476936, guid: 376a33597184fc945bf4e56cc72263f3, type: 2}
