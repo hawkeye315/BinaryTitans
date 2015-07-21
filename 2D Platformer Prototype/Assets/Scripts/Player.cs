@@ -133,6 +133,7 @@ public class Player : MonoBehaviour {
 			if (angle <= -(Mathf.PI/3) && angle >= -(2*Mathf.PI/3) && col.gameObject.tag == "Enemy") {
 				Destroy (col.gameObject);
 				gameManager.ChangeScore (100);
+				playerBody.velocity = new Vector3(0, jumpHeight);
 			}
 			else {
 				//if player is to left of enemy, push left, otherwise right
@@ -145,25 +146,32 @@ public class Player : MonoBehaviour {
 				
 			}
 		}
+		if (col.gameObject.tag == "Platform")
+			col.rigidbody.velocity = Vector3.zero;
 	}
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
 		if (col.gameObject.tag == "Platform"){
-			float diffX = col.rigidbody.velocity.x-playerBody.velocity.x;
-			playerBody.velocity = new Vector2(playerBody.velocity.x + diffX, playerBody.velocity.y);
+			transform.parent = col.transform;
+			doubleJumped = false;
+			grounded = true; // later check if below player, not just by touching.
 		}
 	}
 	void OnCollisionExit(Collision col)
 	{
 		if (col.gameObject.tag == "Platform"){
 			onPlatform = false;
+			transform.parent = null;
 		}
 	}
     // Jump function.
     public void Jump()
     {
-        playerBody.velocity = new Vector2(0, jumpHeight);  
+		if (onPlatform) {
+			transform.parent = null;
+		}
+		playerBody.velocity = new Vector3(0, jumpHeight);
     }
 	public void HurtPlayer(string direction, int damage){
 		if (direction == "Left")
@@ -176,12 +184,7 @@ public class Player : MonoBehaviour {
     // Move function.
 	private void MovePlayer(float xMoveSpeed, int xDirection, float yMoveSpeed, int yDirection)
 	{
-		if (onPlatform && xDirection > 0)
-			playerBody.velocity = new Vector2(xMoveSpeed + Mathf.Abs(playerBody.velocity.x), yMoveSpeed * yDirection);
-		else if (onPlatform && xDirection < 0)
-			playerBody.velocity = new Vector2(-(xMoveSpeed + Mathf.Abs(playerBody.velocity.x)), yMoveSpeed * yDirection);
-		else
-			playerBody.velocity = new Vector2(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
+			playerBody.velocity = new Vector3(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
 
 	public void ChangeHealth(int change){

@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour {
 	private Animator anim;
 	public int enemyType; //0-ground, 1-flying, 2-boss;
 	private Vector3 downV3, nextPosition; //next position is for a flier to determine next point in space
-	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
+//	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
 	private Transform player; //used to locate player for aiming
 	private bool visible; //is enemy in camera's view
 
@@ -21,8 +21,8 @@ public class EnemyAI : MonoBehaviour {
 		trigger = false;
 		move = true;
 		player = GameObject.FindObjectOfType<Player>().transform;
-		rangeX = maxX - minX; //calculate range of X and Y
-		rangeY = maxY - minY;
+//		rangeX = maxX - minX; //calculate range of X and Y
+//		rangeY = maxY - minY;
 		nextTriggerInterval = Time.time + (Random.value * 5 + 1); //randomly pick the next time for shooting between 1 and 6 seconds
 		nextMoveInterval = Time.time + (Random.value * 3 + 2); //randomly pick next move between 2 and 5 seconds (2 + rand 3)
 		moveDirection = 1;
@@ -66,8 +66,8 @@ public class EnemyAI : MonoBehaviour {
 				moveDirection = 1;
 			else
 				moveDirection = -1;
-			if (move){
-					nextPosition = new Vector3 (minX + Random.value * rangeX, minY + Random.value * rangeY, transform.position.z);
+			if (move && visible){
+					nextPosition = new Vector3 (player.position.x + Random.value * 5 + (-3 * moveDirection), player.position.y + Random.value * 5 + 3, transform.position.z);
 			}
 			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed);
 			if (visible && trigger)
