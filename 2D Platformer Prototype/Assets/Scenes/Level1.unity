@@ -12071,7 +12071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8dc7499e06e9ac4dbfd641d22c42bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 40
+  fireRate: 60
   damage: 10
   BulletTrailPrefab: {fileID: 482640, guid: 95a6e89b8ad10044585e046563f892ec, type: 2}
   MuzzleFlashPrefab: {fileID: 485586, guid: 80407ff329e2d774ebaf1b86c58499d6, type: 2}
