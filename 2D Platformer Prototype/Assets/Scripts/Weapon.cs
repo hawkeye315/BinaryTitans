@@ -53,8 +53,9 @@ public class Weapon : MonoBehaviour {
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
         Vector2 mousePos2 = new Vector2(mousePosition.x, mousePosition.y);
 
-        Ray shootRay = new Ray(firePointPosition, mousePos2);
-        Debug.DrawRay(firePointPosition, (mousePos2 - firePointPosition) * 100, Color.cyan);
+//		Ray shootRay = new Ray(firePointPosition, mousePos2);
+		Ray shootRay = new Ray(firePointPosition, (mousePos2 - firePointPosition) * 100);
+		Debug.DrawRay(firePointPosition, (mousePos2 - firePointPosition) * 100, Color.cyan);
         float distance = 100f;
        
         Vector2 effectDirection = (mousePos2 - firePointPosition) * 100;

@@ -35,10 +35,10 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameManager = FindObjectOfType<GameManager>();
-		anim = GetComponent<Animator>();
+		anim = GetComponentInChildren<Animator>();
 		playerBody = GetComponent<Rigidbody>();
 		lives = 3;
-		playerCol = GetComponent<Collider> ();
+		playerCol = GetComponentInChildren<Collider> ();
 	}
 	
 	// This function checks to see if the Player is touching the ground and
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
 		grounded = false; 
 		float distance = 2.2f;
 		RaycastHit hit;
-		Ray groundRay = new Ray(transform.position, Vector3.down);
+		Ray groundRay = new Ray(new Vector3(transform.position.x, transform.position.y, transform.position.z), Vector3.down);
 		Debug.DrawRay(transform.position, Vector3.down * distance);
 		if(Physics.Raycast(groundRay, out hit, distance)){
 			if(hit.collider.tag == "Ground" || hit.collider.tag == "Platform"){
@@ -86,6 +86,7 @@ public class Player : MonoBehaviour {
 		if(takenDamage || health <= 0){
 			return;
 		}
+//		Debug.Log ("Jump Count = " + jumpCount);
 		// Jump code. If space is pressed and the player is touching the ground then run Jump function.
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
@@ -114,22 +115,16 @@ public class Player : MonoBehaviour {
 		{
 			anim.SetBool("MeleeAttack", true);
 		}
-		if (transform.parent != null && transform.parent.tag == "Platform") {
-			Vector3 dir = transform.parent.transform.position - transform.position;
-			float angle = Mathf.Atan2 (dir.y, dir.x);
-			//			Debug.Log("Angle: " + angle);
-			if (angle > 0.1 || angle < -1.8)
-				playerBody.velocity = new Vector3(0, playerBody.velocity.y, playerBody.velocity.z);
-		}
-		//		actualVelocityX = (playerBody.position.x-lastX)/Time.deltaTime;
-		Debug.Log ("Grounded: " + grounded + ", onPlatform: " + onPlatform + ", jumpCount: " + jumpCount + ", friction: " + playerCol.material.dynamicFriction);
-		//		lastX = playerBody.position.x;
-		if (!grounded && transform.parent == null) {
+//		if (!grounded && transform.parent == null) {
+		if (!grounded && !onPlatform) {
+			Debug.Log("No Friction");
+			playerCol.material.frictionCombine = PhysicMaterialCombine.Minimum;
 			playerCol.material.dynamicFriction = 0f;
 			playerCol.material.staticFriction = 0f;
 		}
 		else
 		{
+			playerCol.material.frictionCombine = PhysicMaterialCombine.Average;
 			playerCol.material.dynamicFriction = 0.6f;
 			playerCol.material.staticFriction = 0.6f;
 		}
@@ -158,17 +153,14 @@ public class Player : MonoBehaviour {
 				
 			}
 		}
-		if (col.gameObject.tag == "Platform") {
-			lastPos = col.transform.position;
-			col.rigidbody.velocity = Vector3.zero;
-		}
 	}
 	//On maintained collision with another object
 	void OnCollisionStay(Collision col)
 	{
-		if (col.gameObject.tag == "Platform"){
+//		Debug.Log (col.transform.position.y+2.46 + " " + transform.position.y);
+		if (col.gameObject.tag == "Platform" && col.transform.position.y + 2.46 <= transform.position.y){
 			onPlatform = true;
-			//			Debug.Log(col.transform.);
+//						Debug.Log(onPlatform + " " + grounded);
 			//			playerBody.position = new Vector3(playerBody.position.x + (col.transform.position.x - lastPos.x), playerBody.position.y + (col.transform.position.y - lastPos.y), playerBody.position.z);
 			//			lastPos = col.transform.position;
 			transform.parent = col.gameObject.transform;
