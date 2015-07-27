@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: e516fe775cc54ab4c81455559afa66a4
+<<<<<<< HEAD
 timeCreated: 1434904898
 licenseType: Free
+=======
+>>>>>>> playerWeapon
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

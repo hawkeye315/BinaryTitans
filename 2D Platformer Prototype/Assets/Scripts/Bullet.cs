@@ -17,11 +17,20 @@ public class Bullet : MonoBehaviour {
 		Vector3 dir = col.gameObject.transform.position - transform.position;
 		float angle = Mathf.Atan2(dir.y, dir.x);
 
+<<<<<<< HEAD
 		if (col.gameObject.tag == "Player")
 			if (angle > (Mathf.PI/2) || angle < -(Mathf.PI/2))
 				col.gameObject.GetComponent<Player>().HurtPlayer("Left", 10);
 			else
 				col.gameObject.GetComponent<Player>().HurtPlayer("Right", 10);
+=======
+		if (col.gameObject.tag == "Player") {
+			if (angle > (Mathf.PI / 2) || angle < -(Mathf.PI / 2))
+				col.gameObject.GetComponent<Player> ().HurtPlayer ("Left", 10);
+			else
+				col.gameObject.GetComponent<Player> ().HurtPlayer ("Right", 10);
+		}
+>>>>>>> playerWeapon
 		Destroy (gameObject);
 	}
 	void OnBecameInvisible(){
