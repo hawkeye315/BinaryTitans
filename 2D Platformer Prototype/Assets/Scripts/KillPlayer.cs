@@ -17,7 +17,7 @@ public class KillPlayer : MonoBehaviour {
     {
         if (other.name == "Player")
         {
-			GameObject.FindObjectOfType<Player>().changeHealth(-20);
+			GameObject.FindObjectOfType<Player>().ChangeHealth(-20);
         }
     }
 }
