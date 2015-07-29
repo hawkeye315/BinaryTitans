@@ -2,20 +2,25 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
-	
+	public enum EnemyType {
+		Walker,
+		Flier,
+		Boss
+	}	
 	public float moveSpeed; //move speed. ground walkers are less sensitive
 	private double nextTriggerInterval, nextMoveInterval; // Last interval end time
 	private int moveDirection; //+1 = right, -1 = left
 	private bool grounded,trigger,move; //if on ground, if ready to shoot, if ready to move
 	private int health; //haven't implemented this yet
 	private Animator anim;
-	public int enemyType; //0-ground, 1-flying, 2-boss;
+	public EnemyType enemyType; //0-ground, 1-flying, 2-boss;
 	private Vector3 downV3, nextPosition; //next position is for a flier to determine next point in space
 	//	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
 	private Transform player; //used to locate player for aiming
 	private bool visible; //is enemy in camera's view
-	
-	
+		
+
+
 	void Start () {
 		visible = false;
 		trigger = false;
@@ -29,7 +34,7 @@ public class EnemyAI : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		nextPosition = transform.position;
 		downV3 = transform.TransformDirection (Vector3.down); //vector for downward raycast. used to detecting edge of platform
-		if (enemyType == 1)
+		if (enemyType == EnemyType.Flier)
 			GetComponent<Rigidbody> ().useGravity = false;
 	}
 	
@@ -46,7 +51,7 @@ public class EnemyAI : MonoBehaviour {
 		}
 		
 		switch (enemyType) {
-		case 0: //ground walker - Ray casting on downward in front and behind to detect if there is something to walk on
+		case EnemyType.Walker: //ground walker - Ray casting on downward in front and behind to detect if there is something to walk on
 			if (!Physics.Raycast (new Vector3 (transform.position.x + 1, transform.position.y), downV3, 5)) {
 				moveDirection = -1;
 			}
@@ -60,7 +65,7 @@ public class EnemyAI : MonoBehaviour {
 			}
 			GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
 			break;
-		case 1://hover enemy
+		case EnemyType.Flier://hover enemy
 			//			if (Vector3.Distance(transform.position, nextPosition) <= 1){
 			if(player.position.x > transform.position.x) //Flying enemy is always facing player
 				moveDirection = 1;
@@ -73,7 +78,7 @@ public class EnemyAI : MonoBehaviour {
 			if (visible && trigger)
 				Shoot (angle);
 			break;
-		case 2://boss
+		case EnemyType.Boss://boss
 			break;
 		}
 		trigger = false; //reset trigger
