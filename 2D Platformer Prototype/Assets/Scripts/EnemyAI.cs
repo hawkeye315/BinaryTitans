@@ -2,18 +2,23 @@ using UnityEngine;
 using System.Collections;
 
 public class EnemyAI : MonoBehaviour {
-
+	public enum EnemyType {
+		Walker,
+		Flier,
+		Boss
+	}	
 	public float moveSpeed; //move speed. ground walkers are less sensitive
 	private double nextTriggerInterval, nextMoveInterval; // Last interval end time
 	private int moveDirection; //+1 = right, -1 = left
 	private bool grounded,trigger,move; //if on ground, if ready to shoot, if ready to move
 	private int health; //haven't implemented this yet
 	private Animator anim;
-	public int enemyType; //0-ground, 1-flying, 2-boss;
+	public EnemyType enemyType; //0-ground, 1-flying, 2-boss;
 	private Vector3 downV3, nextPosition; //next position is for a flier to determine next point in space
-	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
+	//	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
 	private Transform player; //used to locate player for aiming
 	private bool visible; //is enemy in camera's view
+		
 
 
 	void Start () {
@@ -21,18 +26,18 @@ public class EnemyAI : MonoBehaviour {
 		trigger = false;
 		move = true;
 		player = GameObject.FindObjectOfType<Player>().transform;
-		rangeX = maxX - minX; //calculate range of X and Y
-		rangeY = maxY - minY;
+		//		rangeX = maxX - minX; //calculate range of X and Y
+		//		rangeY = maxY - minY;
 		nextTriggerInterval = Time.time + (Random.value * 5 + 1); //randomly pick the next time for shooting between 1 and 6 seconds
 		nextMoveInterval = Time.time + (Random.value * 3 + 2); //randomly pick next move between 2 and 5 seconds (2 + rand 3)
 		moveDirection = 1;
 		anim = GetComponent<Animator>();
 		nextPosition = transform.position;
 		downV3 = transform.TransformDirection (Vector3.down); //vector for downward raycast. used to detecting edge of platform
-		if (enemyType == 1)
+		if (enemyType == EnemyType.Flier)
 			GetComponent<Rigidbody> ().useGravity = false;
 	}
-
+	
 	void Update () {
 		Vector3 dir = player.position - transform.position;
 		float angle = Mathf.Atan2(dir.y, dir.x); //determine angle between Enemy and Player
@@ -44,9 +49,9 @@ public class EnemyAI : MonoBehaviour {
 			move = true;
 			nextMoveInterval = Time.time + (Random.value * 3 + 2);
 		}
-
+		
 		switch (enemyType) {
-		case 0: //ground walker - Ray casting on downward in front and behind to detect if there is something to walk on
+		case EnemyType.Walker: //ground walker - Ray casting on downward in front and behind to detect if there is something to walk on
 			if (!Physics.Raycast (new Vector3 (transform.position.x + 1, transform.position.y), downV3, 5)) {
 				moveDirection = -1;
 			}
@@ -60,20 +65,20 @@ public class EnemyAI : MonoBehaviour {
 			}
 			GetComponent<Rigidbody>().velocity = new Vector3(moveSpeed * moveDirection, GetComponent<Rigidbody>().velocity.y, GetComponent<Rigidbody>().velocity.z);
 			break;
-		case 1://hover enemy
-//			if (Vector3.Distance(transform.position, nextPosition) <= 1){
+		case EnemyType.Flier://hover enemy
+			//			if (Vector3.Distance(transform.position, nextPosition) <= 1){
 			if(player.position.x > transform.position.x) //Flying enemy is always facing player
 				moveDirection = 1;
 			else
 				moveDirection = -1;
-			if (move){
-					nextPosition = new Vector3 (minX + Random.value * rangeX, minY + Random.value * rangeY, transform.position.z);
+			if (move && visible){
+				nextPosition = new Vector3 (player.position.x + Random.value * 5 + (-3 * moveDirection), player.position.y + Random.value * 5 + 3, transform.position.z);
 			}
 			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed);
 			if (visible && trigger)
 				Shoot (angle);
 			break;
-		case 2://boss
+		case EnemyType.Boss://boss
 			break;
 		}
 		trigger = false; //reset trigger
@@ -82,9 +87,9 @@ public class EnemyAI : MonoBehaviour {
 			transform.eulerAngles = new Vector3(0,0,0);
 		else
 			transform.eulerAngles = new Vector3(0,180,0);
-
-//			if (attributes[1]) Shoot (0f + (moveDirection * 90));//
-//			if (attributes[2]) Attack(moveDirection);
+		
+		//			if (attributes[1]) Shoot (0f + (moveDirection * 90));//
+		//			if (attributes[2]) Attack(moveDirection);
 		//		if(anim.GetBool("Attack")){
 		//			anim.SetBool("Attack", false);
 		//		}
@@ -111,7 +116,7 @@ public class EnemyAI : MonoBehaviour {
 	{
 		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
 	}
-
+	
 	public void Attack(int direction){
 		anim.SetBool("Attack", true);
 	}
