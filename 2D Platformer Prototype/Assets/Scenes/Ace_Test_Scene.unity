@@ -1921,8 +1921,8 @@ Transform:
   - {fileID: 11569482}
   - {fileID: 612119081}
   - {fileID: 1730753544}
-  - {fileID: 245266381}
   - {fileID: 1865255033}
+  - {fileID: 245266381}
   - {fileID: 64297105}
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -2305,22 +2305,22 @@ Transform:
   - {fileID: 997408685}
   - {fileID: 1669594788}
   - {fileID: 902606949}
+  - {fileID: 1126012816}
   - {fileID: 824904606}
+  - {fileID: 1538681469}
   - {fileID: 995507830}
+  - {fileID: 854714236}
   - {fileID: 1404331779}
+  - {fileID: 2067109404}
   - {fileID: 1719262965}
   - {fileID: 1260731003}
-  - {fileID: 1538681469}
-  - {fileID: 854714236}
-  - {fileID: 1960326177}
-  - {fileID: 638582760}
-  - {fileID: 178078646}
-  - {fileID: 2067109404}
-  - {fileID: 1126012816}
   - {fileID: 316711321}
   - {fileID: 222689028}
   - {fileID: 2040303121}
+  - {fileID: 1960326177}
+  - {fileID: 638582760}
   - {fileID: 86675652}
+  - {fileID: 178078646}
   - {fileID: 466656607}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -8686,7 +8686,7 @@ Light:
   serializedVersion: 6
   m_Type: 1
   m_Color: {r: .485294104, g: .485294104, b: .485294104, a: 1}
-  m_Intensity: 4.42000008
+  m_Intensity: 1.77999997
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -8704,7 +8704,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_Lightmapping: 4
-  m_BounceIntensity: 3.71000004
+  m_BounceIntensity: 2.8900001
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
