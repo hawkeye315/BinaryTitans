@@ -142,6 +142,18 @@ Material:
         second: .5
       data:
         first:
+          name: _Exposure
+        second: 2.75
+      data:
+        first:
+          name: _SunSize
+        second: .0949999988
+      data:
+        first:
+          name: _AtmosphereThickness
+        second: 0
+      data:
+        first:
           name: _Parallax
         second: .0199999996
       data:
@@ -178,20 +190,8 @@ Material:
         second: 0
       data:
         first:
-          name: _Exposure
-        second: 1.28999996
-      data:
-        first:
-          name: _SunSize
-        second: .0949999988
-      data:
-        first:
-          name: _AtmosphereThickness
-        second: 0
-      data:
-        first:
           name: _Rotation
-        second: 34
+        second: 55
     m_Colors:
       data:
         first:
@@ -203,13 +203,13 @@ Material:
         second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
-          name: _GroundColor
-        second: {r: .368999988, g: .349000007, b: .340999991, a: 1}
-      data:
-        first:
           name: _SkyTint
         second: {r: .5, g: .5, b: .5, a: 1}
       data:
         first:
+          name: _GroundColor
+        second: {r: .368999988, g: .349000007, b: .340999991, a: 1}
+      data:
+        first:
           name: _Tint
-        second: {r: .132352948, g: .132352948, b: .132352948, a: .5}
+        second: {r: .176470578, g: .176470578, b: .176470578, a: .5}
