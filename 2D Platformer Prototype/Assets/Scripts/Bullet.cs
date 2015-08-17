@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Bullet : MonoBehaviour {
@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour {
 				col.gameObject.GetComponent<Player> ().HurtPlayer ("Left", 10);
 			else
 				col.gameObject.GetComponent<Player> ().HurtPlayer ("Right", 10);
+
+            col.gameObject.GetComponent<Player>().sounds[4].Play();
 		}
 		Destroy (gameObject);
 	}

@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	// Player controller script, will assign on start
 	private Player player;
 	public float respawnDelay;
-	
+    public AudioSource backgroundMusic;
 	private int score = 0;
 	
 	
@@ -14,13 +14,14 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		player = FindObjectOfType<Player>();
 		player.transform.position = GameObject.FindGameObjectWithTag("PlayerStartPoint").transform.position;
+        backgroundMusic = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 		if (player.transform.position.y <= -10) {
-			player.ChangeHealth(- player.health);
+			//player.ChangeHealth(- player.health);
 		}
 		//Debug.Log("Player y= " + player.transform.position.y);
 		
@@ -47,7 +48,12 @@ public class GameManager : MonoBehaviour {
 			score = 0;
 		}
 		player.health = 100;
-		Debug.Log("Respawn Player.");
+        if (backgroundMusic.isPlaying)
+        {
+            backgroundMusic.Stop();
+            backgroundMusic.Play();
+        }
+        Debug.Log("Respawn Player.");
 	}
 	
 	public int GetScore()

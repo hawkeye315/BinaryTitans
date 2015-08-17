@@ -13,6 +13,12 @@ public class Weapon : MonoBehaviour {
 
     float timeToFire = 0;
     Transform firePoint;
+    public AudioSource gunSound;
+    // Add enemy hit sound
+    void Start()
+    {
+        gunSound = GetComponent<AudioSource>();
+    }
 
     void Awake()
     {
@@ -31,6 +37,11 @@ public class Weapon : MonoBehaviour {
             if (Input.GetButtonDown("Fire1"))
             {
                 Shoot();
+                gunSound.Play();
+            }
+            else
+            {
+                gunSound.Pause();
             }
         }
         else
@@ -39,6 +50,11 @@ public class Weapon : MonoBehaviour {
             {
                 timeToFire = Time.time + 1 / fireRate;
                 Shoot();
+                gunSound.Play();
+            }
+            else
+            {
+                gunSound.Pause();
             }
         }
 	}
@@ -64,6 +80,7 @@ public class Weapon : MonoBehaviour {
             Effect();
             timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
         }
+
         if (Physics.Raycast(shootRay, out rHit, distance))
         {
             if (rHit.collider.tag== "Enemy")

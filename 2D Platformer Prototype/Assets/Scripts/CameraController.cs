@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
@@ -24,12 +24,13 @@ public class CameraController : MonoBehaviour {
 			cameraPosition [0] = player.transform.position.x - forwardCameraBuffer;
 		else if ((player.transform.position.x - transform.position.x) < -rearCameraBuffer)
 			cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
-		if ((player.transform.position.y - transform.position.y) > 5)
-			cameraPosition [1] = player.transform.position.y - 5;
-		else if ((player.transform.position.y - transform.position.y) < 0 && player.transform.position.y > -3)
-			cameraPosition [1] = player.transform.position.y;
+        //if ((player.transform.position.y - transform.position.y) > 5)
+        //    cameraPosition [1] = player.transform.position.y - 5;
+        //else if ((player.transform.position.y - transform.position.y) < 0 && player.transform.position.y > -3)
+        //    cameraPosition [1] = player.transform.position.y;
 
-		cameraPosition [1] += 5;
+        cameraPosition[1] = player.transform.position.y;
+		//cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
 	}
 

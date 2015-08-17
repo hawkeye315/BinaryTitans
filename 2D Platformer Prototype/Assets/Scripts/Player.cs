@@ -31,7 +31,16 @@ public class Player : MonoBehaviour {
 	private RaycastHit hit;
 	private Rigidbody playerBody;
 	private Collider playerCol;
-	
+    private bool isMovingLeft;
+
+    public AudioSource[] sounds;
+    public AudioSource footSound;
+    public AudioSource jumpSound;
+    public AudioSource doublejumpSound;
+    public AudioSource deathSound;
+    public AudioSource playerHitSound;
+    public AudioSource enemyDeath;
+
 	// Use this for initialization
 	void Start () {
 		gameManager = FindObjectOfType<GameManager>();
@@ -39,6 +48,13 @@ public class Player : MonoBehaviour {
 		playerBody = GetComponent<Rigidbody>();
 		lives = 3;
 		playerCol = GetComponentInChildren<Collider> ();
+        sounds = GetComponents<AudioSource>();
+        footSound = sounds[0];
+        jumpSound = sounds[1];
+        doublejumpSound = sounds[2];
+        deathSound = sounds[3];
+        playerHitSound = sounds[4];
+        enemyDeath = sounds[5];
 	}
 	
 	// This function checks to see if the Player is touching the ground and
@@ -59,7 +75,7 @@ public class Player : MonoBehaviour {
 				grounded = true;
 				jumpCount = 0;
 			}
-			//			Debug.Log(hit.collider.tag + " Distance: " + hit.distance);
+			// Debug.Log(hit.collider.tag + " Distance: " + hit.distance);
 		}
 		if (onPlatform) {
 			jumpCount = 0;
@@ -86,13 +102,17 @@ public class Player : MonoBehaviour {
 		if(takenDamage || health <= 0){
 			return;
 		}
-//		Debug.Log ("Jump Count = " + jumpCount);
+        // Debug.Log ("Jump Count = " + jumpCount);
 		// Jump code. If space is pressed and the player is touching the ground then run Jump function.
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			if (jumpCount < 2) {
 				Jump ();
 			}
+            if (jumpCount == 1)
+            {
+                doublejumpSound.Play();
+            }
 			jumpCount += 1;
 		}
 		
@@ -101,15 +121,38 @@ public class Player : MonoBehaviour {
 		{
 			transform.eulerAngles = new Vector3(0,180,0);
 			MovePlayer (moveSpeed, -1, playerBody.velocity.y +.2f, 1);
+            if (!footSound.isPlaying && grounded)
+            {
+                footSound.Play();
+                isMovingLeft = true;
+            }
 		}
+        else
+        {
+            if (isMovingLeft || !grounded)
+            {
+                footSound.Pause();
+                isMovingLeft = false;
+            }
+        }
 		
 		// Right movement
 		if (Input.GetKey(KeyCode.D))
 		{
 			transform.eulerAngles = new Vector3(0,0,0);
 			MovePlayer (moveSpeed, 1, playerBody.velocity.y +.2f, 1);
+            if (!footSound.isPlaying && grounded)
+            {
+                footSound.Play();
+            }
 		}
-		
+        else
+        {
+            if (!isMovingLeft || !grounded)
+            {
+                footSound.Pause();
+            }
+        }
 		
 		if (Input.GetKeyDown(KeyCode.P))
 		{
@@ -124,10 +167,11 @@ public class Player : MonoBehaviour {
 		}
 		else
 		{
-			playerCol.material.frictionCombine = PhysicMaterialCombine.Average;
-			playerCol.material.dynamicFriction = 0.6f;
-			playerCol.material.staticFriction = 0.6f;
+            playerCol.material.frictionCombine = PhysicMaterialCombine.Average;
+            playerCol.material.dynamicFriction = 0.6f;
+            playerCol.material.staticFriction = 0.6f;
 		}
+       
 	}
 	void OnCollisionEnter(Collision col){
 		//Determines the angle of the collision
@@ -138,6 +182,7 @@ public class Player : MonoBehaviour {
 		if (col.gameObject.tag == "Enemy") {
 			//if at a downward, vertical angle, destroy enemy, else hurt player
 			if (angle <= -(Mathf.PI/3) && angle >= -(2*Mathf.PI/3) && col.gameObject.tag == "Enemy") {
+                enemyDeath.Play();
 				Destroy (col.gameObject);
 				gameManager.ChangeScore (100);
 				playerBody.velocity = new Vector3(0, jumpHeight);
@@ -181,6 +226,7 @@ public class Player : MonoBehaviour {
 			//			transform.parent = null;
 		}
 		playerBody.velocity = new Vector3(0, jumpHeight);
+        jumpSound.Play();
 	}
 	public void HurtPlayer(string direction, int damage){
 		if (direction == "Left")
@@ -207,6 +253,7 @@ public class Player : MonoBehaviour {
 			takenDamage = true;
 		}
 		if (health <= 0) {
+            deathSound.Play();
 			gameManager.RespawnPlayer();
 			takenDamage = true;
 		} else if (health > 100)
