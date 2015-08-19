@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour {
 
 	private Vector3 cameraVector;
 	private float[] cameraPosition = new float[3];
-	public float forwardCameraBuffer, rearCameraBuffer;
+	public float forwardCameraBuffer, rearCameraBuffer, yOffset;
 
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour {
 
 		cameraVector = transform.position;
 		cameraPosition [0] = player.transform.position.x + rearCameraBuffer;
-		cameraPosition [1] = player.transform.position.y;
+		cameraPosition [1] = player.transform.position.y + yOffset;
 		cameraPosition [2] = transform.position.z;
 	}
 	
@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour {
         //else if ((player.transform.position.y - transform.position.y) < 0 && player.transform.position.y > -3)
         //    cameraPosition [1] = player.transform.position.y;
 
-        cameraPosition[1] = player.transform.position.y;
+        cameraPosition[1] = player.transform.position.y + yOffset;
 		//cameraPosition [1] += 5;
 		SetCameraPosition (cameraPosition);
 	}

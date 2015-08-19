@@ -77,7 +77,7 @@ public class EnemyAI : MonoBehaviour {
 			if (move && visible){
 				nextPosition = new Vector3 (player.position.x + Random.value * 5 + (-3 * moveDirection), player.position.y + Random.value * 5 + 3, transform.position.z);
 			}
-			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed);
+			transform.position = Vector3.Slerp (transform.position, nextPosition, Time.deltaTime * moveSpeed / 3);
 			if (visible && trigger)
 				Shoot (angle);
 			break;
