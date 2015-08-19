@@ -98,7 +98,10 @@ public class EnemyAI : MonoBehaviour {
 		//		}
 	}
 	void OnCollisionEnter(Collision col){
-		if (col.gameObject.tag != "Ground") {
+		Vector3 dir = col.gameObject.transform.position - transform.position;
+		float angle = Mathf.Atan2(dir.y, dir.x);
+
+		if (col.gameObject.tag != "Ground" || angle >= 0) {
 			if (col.gameObject.transform.position.x < transform.position.x && col.gameObject.tag != "Player") //if collision with something other than player or ground, turn around
 				moveDirection = 1;
 			else if (col.gameObject.tag != "Player")
