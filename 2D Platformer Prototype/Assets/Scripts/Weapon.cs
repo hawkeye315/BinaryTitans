@@ -19,7 +19,7 @@ public class Weapon : MonoBehaviour {
     void Start()
     {
         gunSound = GetComponent<AudioSource>();
-		mouseZ = -(GameObject.FindObjectOfType<Camera>().transform.position.z + GameObject.FindObjectOfType<Player> ().transform.position.z);
+		mouseZ = -(GameObject.FindObjectOfType<Camera>().transform.position.z - GameObject.FindObjectOfType<Player> ().transform.position.z);
 		Debug.Log (mouseZ);
     }
 
