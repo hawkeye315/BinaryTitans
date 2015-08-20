@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 	
 	//time since last damage
 	private float timeSinceDamage = 0;
+	private float timeSinceGrounded = 0;
 	private float invunerableDamageTime = 0.5f;
 	public bool takenDamage = true;
 	
@@ -65,6 +66,10 @@ public class Player : MonoBehaviour {
 	//}
 	// Update is called once per frame
 	private void Update () {
+		if (grounded)
+			timeSinceGrounded = 0;
+		else
+			timeSinceGrounded += Time.deltaTime;
 		grounded = false; 
 		float distance = 2.2f;
 		RaycastHit hit;
@@ -171,6 +176,8 @@ public class Player : MonoBehaviour {
             playerCol.material.dynamicFriction = 0.6f;
             playerCol.material.staticFriction = 0.6f;
 		}
+		if (timeSinceGrounded >= 3)
+			ChangeHealth (-100);
        
 	}
 	void OnCollisionEnter(Collision col){
@@ -241,7 +248,6 @@ public class Player : MonoBehaviour {
 	{
 		playerBody.velocity = new Vector3(xMoveSpeed * xDirection, yMoveSpeed * yDirection);
 	}
-	
 	public void ChangeHealth(int change){
 		//If the player has taken damage recently we dont want him to take it again
 		if(takenDamage){
