@@ -17,10 +17,11 @@ public class EnemyAI : MonoBehaviour {
 	private Vector3 downV3, nextPosition; //next position is for a flier to determine next point in space
 	//	public float minX, maxX, minY, maxY, rangeX, rangeY; //controls area which flying enemy can move 
 	private Transform player; //used to locate player for aiming
-	private bool visible; //is enemy in camera's view
+	public bool visible; //is enemy in camera's view
     //private AudioSource[] sounds;
     //private AudioSource shotSound;
-    private AudioSource laserSound;
+    private AudioSource[] sounds;
+	private AudioSource laserSound;
 
 
 	void Start () {
@@ -38,7 +39,9 @@ public class EnemyAI : MonoBehaviour {
 		downV3 = transform.TransformDirection (Vector3.down); //vector for downward raycast. used to detecting edge of platform
 		if (enemyType == EnemyType.Flier)
 			GetComponent<Rigidbody> ().useGravity = false;
-        laserSound = GetComponent<AudioSource>();
+        sounds = GetComponents<AudioSource>();
+		laserSound = sounds[0];
+
 	}
 	
 	void Update () {
@@ -118,6 +121,10 @@ public class EnemyAI : MonoBehaviour {
 	void OnWillRenderObject(){
 		visible = true;
 	}
+	public void Kill ()
+	{
+		Destroy(gameObject);
+	}
 	public void Jump(float jumpHeight)
 	{
 		GetComponent<Rigidbody>().velocity = new Vector3(GetComponent<Rigidbody>().velocity.x, jumpHeight, GetComponent<Rigidbody>().velocity.z);  
@@ -133,12 +140,13 @@ public class EnemyAI : MonoBehaviour {
 			bullet = (GameObject)Instantiate (Resources.Load ("Bullet"), new Vector3 (transform.position.x + 2.5f, transform.position.y), Quaternion.Euler (new Vector3 (0, 0, (angle*Mathf.Rad2Deg) + 90)));
 			bullet.GetComponent<Bullet> ().scaleX = Mathf.Cos (angle);
 			bullet.GetComponent<Bullet> ().scaleY = Mathf.Sin (angle);
+	        laserSound.Play();
 		}
 		else if ((angle > (Mathf.PI/2) || angle < -(Mathf.PI/2)) && moveDirection < 0) {
 			bullet = (GameObject)Instantiate(Resources.Load("Bullet"), new Vector3(transform.position.x - 2.5f, transform.position.y), Quaternion.Euler(new Vector3(0,0,(angle*Mathf.Rad2Deg)+90)));
 			bullet.GetComponent<Bullet>().scaleX = Mathf.Cos(angle);
 			bullet.GetComponent<Bullet>().scaleY = Mathf.Sin(angle);
+	        laserSound.Play();
 		}
-        laserSound.Play();
 	}
 }

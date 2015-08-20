@@ -64,8 +64,4 @@ public class GameManager : MonoBehaviour {
 	public void ChangeScore(int change){
 		score += change;
 	}
-	
-	
-	
-	
 }

@@ -14,10 +14,13 @@ public class Weapon : MonoBehaviour {
     float timeToFire = 0;
     Transform firePoint;
     public AudioSource gunSound;
+	private float mouseZ;
     // Add enemy hit sound
     void Start()
     {
         gunSound = GetComponent<AudioSource>();
+		mouseZ = -(GameObject.FindObjectOfType<Camera>().transform.position.z + GameObject.FindObjectOfType<Player> ().transform.position.z);
+		Debug.Log (mouseZ);
     }
 
     void Awake()
@@ -63,11 +66,11 @@ public class Weapon : MonoBehaviour {
     {
         Vector3 mouseposZ = Input.mousePosition;
         RaycastHit rHit;
-        mouseposZ.z = 10;
-        Vector3 mousePosition = new Vector3(Camera.main.ScreenToWorldPoint(mouseposZ).x, Camera.main.ScreenToWorldPoint(mouseposZ).y, Camera.main.ScreenToWorldPoint(mouseposZ).z);
+        mouseposZ.z = mouseZ;
+        Vector3 mousePosition = new Vector3(Camera.main.ScreenToWorldPoint(mouseposZ).x, Camera.main.ScreenToWorldPoint(mouseposZ).y);
 
-        Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
-        Vector2 mousePos2 = new Vector2(mousePosition.x, mousePosition.y);
+        Vector3 firePointPosition = new Vector3(firePoint.position.x, firePoint.position.y, firePoint.position.z);
+        Vector3 mousePos2 = new Vector3(mousePosition.x, mousePosition.y, firePoint.position.z);
 
 //		Ray shootRay = new Ray(firePointPosition, mousePos2);
 		Ray shootRay = new Ray(firePointPosition, (mousePos2 - firePointPosition) * 100);
@@ -77,7 +80,7 @@ public class Weapon : MonoBehaviour {
         Vector2 effectDirection = (mousePos2 - firePointPosition) * 100;
         if (Time.time >= timeToSpawnEffect)
         {
-            Effect();
+			Effect(mouseposZ);
             timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
         }
 
@@ -85,21 +88,26 @@ public class Weapon : MonoBehaviour {
         {
             if (rHit.collider.tag== "Enemy")
             {
-                Debug.Log("hit enemy.");
-            }
+                
+				if (rHit.transform.GetComponent<EnemyAI>().visible)
+				{
 
-            if(rHit.collider.tag == "Platform")
+					rHit.transform.GetComponent<EnemyAI>().Kill();
+					Debug.Log("hit enemy.");
+				}
+            }
+            else if(rHit.collider.tag == "Platform")
             {
                 Debug.Log("Hit Platform.");
             }
         }
     }
 
-    void Effect()
+    void Effect(Vector3 mousePosZ)
     {
         // create quaternion based on mousePosition
-        Vector3 mousePosZ = Input.mousePosition;
-        mousePosZ.z = 10;
+//        Vector3 mousePosZ = Input.mousePosition;
+//        mousePosZ.z = 41;
         Vector3 difference = Camera.main.ScreenToWorldPoint(mousePosZ) - transform.position;
         difference.Normalize();
         float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;

@@ -6,7 +6,7 @@ public class ArmRotation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector3 mousePosZ = Input.mousePosition;
-        mousePosZ.z = 10;
+		mousePosZ.z = -(GameObject.FindObjectOfType<Camera>().transform.position.z + GameObject.FindObjectOfType<Player> ().transform.position.z);
         Vector3 difference = Camera.main.ScreenToWorldPoint(mousePosZ) - transform.position;
         difference.Normalize();
 
