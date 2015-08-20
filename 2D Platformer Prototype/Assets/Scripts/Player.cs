@@ -212,6 +212,7 @@ public class Player : MonoBehaviour {
 //		Debug.Log (col.transform.position.y+2.46 + " " + transform.position.y);
 		if (col.gameObject.tag == "Platform" && col.transform.position.y + 2.46 <= transform.position.y){
 			onPlatform = true;
+			timeSinceGrounded = 0;
 //						Debug.Log(onPlatform + " " + grounded);
 			//			playerBody.position = new Vector3(playerBody.position.x + (col.transform.position.x - lastPos.x), playerBody.position.y + (col.transform.position.y - lastPos.y), playerBody.position.z);
 			//			lastPos = col.transform.position;
