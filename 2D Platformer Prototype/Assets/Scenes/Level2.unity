@@ -4556,7 +4556,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 476936, guid: 376a33597184fc945bf4e56cc72263f3, type: 2}
       propertyPath: m_RootOrder
-      value: 215
+      value: 214
       objectReference: {fileID: 0}
     - target: {fileID: 175572, guid: 376a33597184fc945bf4e56cc72263f3, type: 2}
       propertyPath: m_Name
@@ -15439,17 +15439,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 210
       objectReference: {fileID: 0}
-    - target: {fileID: 414396, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 2
+    - target: {fileID: 5415586, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 11423724, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
-      propertyPath: platformType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11423724, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
-      propertyPath: range
-      value: 10
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
@@ -19704,7 +19700,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414396, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: .617999971
       objectReference: {fileID: 0}
     - target: {fileID: 414396, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: m_LocalRotation.x
@@ -21020,7 +21016,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 414396, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: m_RootOrder
-      value: 214
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: m_Name
@@ -35484,8 +35480,8 @@ RectTransform:
   - {fileID: 401581579}
   - {fileID: 1907585144}
   - {fileID: 1561112590}
-  - {fileID: 1506056142}
   - {fileID: 1567029299}
+  - {fileID: 1506056142}
   - {fileID: 964954543}
   - {fileID: 1990952919}
   - {fileID: 1356827433}

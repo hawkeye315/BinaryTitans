@@ -16,7 +16,7 @@ GameObject:
   - 114: {fileID: 11423724}
   m_Layer: 8
   m_Name: Platform
-  m_TagString: Platform
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 180654}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: -.707106829}
-  m_LocalPosition: {x: -5, y: 1.65931118, z: 2}
-  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_LocalPosition: {x: -346.380005, y: -424.559998, z: 2}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -119,11 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af2e3c747ad0434bb6d5e36b4030f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 0
+  range: 10
   speed: 5
-  type: 0
-  xDirection: 0
-  yDirection: 0
+  platformType: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
