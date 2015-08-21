@@ -534,6 +534,10 @@ Prefab:
       propertyPath: range
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
   m_IsPrefabParent: 0
@@ -19788,6 +19792,10 @@ Prefab:
       propertyPath: m_Name
       value: Platform (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
   m_IsPrefabParent: 0
@@ -21083,6 +21091,10 @@ Prefab:
     - target: {fileID: 11423724, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: range
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
@@ -27940,6 +27952,10 @@ Prefab:
       propertyPath: range
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
   m_IsPrefabParent: 0
@@ -30319,6 +30335,10 @@ Prefab:
     - target: {fileID: 11423724, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: range
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
@@ -33635,6 +33655,10 @@ Prefab:
     - target: {fileID: 11423724, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
       propertyPath: range
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 180654, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5c04ad69dfb56846b1edef65579925e, type: 2}
